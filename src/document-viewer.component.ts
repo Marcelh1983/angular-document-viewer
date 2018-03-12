@@ -12,7 +12,7 @@ export class NgxDocViewerComponent implements OnInit, AfterViewInit {
     public safeStyle: SafeStyle;
     private configuredViewer = "google";
 
-    constructor(private domSanitizer: DomSanitizer, private ngZone: NgZone) { 
+    constructor(private domSanitizer: DomSanitizer, private ngZone: NgZone) {
         if (!this.safeStyle) {
             this.safeStyle = this.domSanitizer.bypassSecurityTrustStyle('width:100%;height:50vh;');
         }
@@ -27,13 +27,13 @@ export class NgxDocViewerComponent implements OnInit, AfterViewInit {
         if (v !== 'google' && v !== 'office') {
             console.error(`Unsupported viewer: '${viewer}'. Supported viewers: google, office`);
         };
-        this.viewer = viewer
+        this.configuredViewer = v;
     }
 
     ngOnInit(): void {
-        const u = this.url.indexOf('/')? encodeURIComponent(this.url) : this.url;
-        this.fullUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.viewer === 'google' ? 
-            `http://docs.google.com/gview?url=${u}&embedded=true`:
+        const u = this.url.indexOf('/') ? encodeURIComponent(this.url) : this.url;
+        this.fullUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.viewer === 'google' ?
+            `http://docs.google.com/gview?url=${u}&embedded=true` :
             `https://view.officeapps.live.com/op/embed.aspx?src=URLEncode(${u})`);
     }
 
@@ -41,7 +41,7 @@ export class NgxDocViewerComponent implements OnInit, AfterViewInit {
         // see: https://stackoverflow.com/questions/40414039/google-docs-viewer-returning-204-responses-no-longer-working-alternatives
         // hack to reload iframe if it's not loaded.
         // would maybe be better to use view.officeapps.live.com but seems not to work with sas token.
-        if (this.viewer === "google") {
+        if (this.configuredViewer === "google") {
             this.ngZone.runOutsideAngular(() => {
                 let iFrameInHtml = false;
                 const timerId = setInterval(() => {
