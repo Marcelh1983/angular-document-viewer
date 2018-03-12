@@ -1,6 +1,6 @@
 {
     "name": "ngx-doc-viewer",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "Angular document viewer.",
     "main": "index.js",
     "scripts": {
