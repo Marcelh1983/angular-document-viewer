@@ -14,7 +14,7 @@ npm install ngx-doc-viewer --save
 
 ```ts
 @NgModule({
-  imports: [NgxDocViewerModule]
+    imports: [NgxDocViewerModule]
   })
   export class AppModule { }
 ```
@@ -22,9 +22,7 @@ npm install ngx-doc-viewer --save
 #### 2. Add DocViewer to component:
 
 ```html
-  <div>
     <ngx-doc-viewer [url]="doc" viewer="google" style="width:100%;height:50vh;"></ngx-doc-viewer>
-  </div>
 ```
 
 #### API:
