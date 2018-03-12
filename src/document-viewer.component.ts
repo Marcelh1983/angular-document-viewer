@@ -1,20 +1,27 @@
 import { Component, Input, EventEmitter, Output, AfterViewInit, NgZone, OnInit } from '@angular/core';
-import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl, SafeResourceUrl, SafeStyle } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'ngx-doc-viewer',
-    template: `<iframe id="iframe" *ngIf="fullUrl" [style]="style" frameBorder="0" [src]="fullUrl"></iframe> `
+    template: `<iframe id="iframe" *ngIf="fullUrl" [style]="safeStyle" frameBorder="0" [src]="fullUrl"></iframe> `
 })
 export class NgxDocViewerComponent implements OnInit, AfterViewInit {
 
     public fullUrl: SafeResourceUrl;
+    public safeStyle: SafeStyle;
     private configuredViewer = "google";
 
-    constructor(private domSanitizer: DomSanitizer, private ngZone: NgZone) { }
+    constructor(private domSanitizer: DomSanitizer, private ngZone: NgZone) { 
+        if (!this.safeStyle) {
+            this.safeStyle = this.domSanitizer.bypassSecurityTrustStyle('width:100%;height:50vh;');
+        }
+    }
 
     @Input() url: string;
-    @Input() style: string = 'height:50vh;width:100%';
+    @Input() set style(style: string) {
+        this.safeStyle = this.domSanitizer.bypassSecurityTrustStyle(style);
+    }
     @Input() set viewer(viewer: string) {
         const v = viewer.toLowerCase();
         if (v !== 'google' && v !== 'office') {
