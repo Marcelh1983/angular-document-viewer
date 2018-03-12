@@ -1,0 +1,49 @@
+{
+    "name": "ngx-doc-viewer",
+    "version": "0.0.1",
+    "description": "Angular document viewer.",
+    "main": "index.js",
+    "scripts": {
+        "build": "gulp clean && gulp compile && gulp copy",
+        "publish": "npm run build && gulp bump && gulp copy && gulp git-add && gulp git-commit && gulp git-push && gulp publish"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Marcelh1983/angular-document-viewer.git"
+    },
+    "keywords": [
+        "Angular",
+        "Word"
+    ],
+    "author": "Marcel Hoekstra",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Marcelh1983/angular-document-viewer/issues"
+    },
+    "homepage": "https://github.com/Marcelh1983/angular-document-viewer#readme",
+    "dependencies": {},
+    "devDependencies": {
+        "@angular/common": "^5.2.8",
+        "@angular/core": "^5.2.8",
+        "@angular/platform-browser": "^5.2.8",
+        "@angular/compiler": "^5.2.8",
+        "@angular/compiler-cli": "^5.2.8",
+        "codelyzer": "4.2.1",
+        "rxjs": "^5.5.6",
+        "zone.js": "^0.8.20",
+        "del": "^3.0.0",
+        "gulp": "^3.9.1",
+        "gulp-bump": "^2.9.0",
+        "gulp-typescript": "^3.2.4",
+        "merge2": "^1.2.1",
+        "typescript": "^2.7.2",
+        "ts-lint": "4.5.1"
+    },
+    "peerDependencies": {
+        "@angular/common": "^5.0.0",
+        "@angular/core": "^5.0.0",
+        "@angular/platform-browser": "^5.0.0",
+        "@angular/router": "^5.0.0",
+        "zone.js": "^0.8.20"
+    }
+}
