@@ -23,7 +23,7 @@ export class NgxDocViewerComponent implements OnInit, AfterViewInit {
         this.safeStyle = this.domSanitizer.bypassSecurityTrustStyle(style);
     }
     @Input() set viewer(viewer: string) {
-        const v = viewer.toLowerCase();
+        const v = viewer.toLowerCase().trim();
         if (v !== 'google' && v !== 'office') {
             console.error(`Unsupported viewer: '${viewer}'. Supported viewers: google, office`);
         };
@@ -32,7 +32,7 @@ export class NgxDocViewerComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         const u = this.url.indexOf('/') ? encodeURIComponent(this.url) : this.url;
-        this.fullUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.viewer === 'google' ?
+        this.fullUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.configuredViewer === 'google' ?
             `http://docs.google.com/gview?url=${u}&embedded=true` :
             `https://view.officeapps.live.com/op/embed.aspx?src=URLEncode(${u})`);
     }
