@@ -20,7 +20,7 @@
     "bugs": {
         "url": "https://github.com/Marcelh1983/angular-document-viewer/issues"
     },
-    "homepage": "https://github.com/Marcelh1983/angular-document-viewer#readme",
+    "homepage": "https://github.com/Marcelh1983/angular-document-viewer",
     "dependencies": {},
     "devDependencies": {
         "@angular/common": "^5.2.8",

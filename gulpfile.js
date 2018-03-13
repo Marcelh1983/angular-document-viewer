@@ -1,3 +1,5 @@
+// credits for build-script to benbaran https://github.com/benbaran/ 
+
 var
     bump = require('gulp-bump'),
     del = require('del'),

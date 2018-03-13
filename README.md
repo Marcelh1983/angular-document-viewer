@@ -2,7 +2,7 @@
 
 # ngx-doc-viewer
 
-This component uses google document viewer of the office365 viewer to show a pdf or word document.
+This component uses google document viewer or the office365 viewer to show a pdf or word document.
 
 ### Install the NPM Module
 ```sh
@@ -27,6 +27,6 @@ npm install ngx-doc-viewer --save
 
 #### API:
 
-- url: url to the document.
+- url: document url.
 - viewer: google or office
 - style
