@@ -33,7 +33,7 @@ export class NgxDocViewerComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
         const u = this.url.indexOf('/') ? encodeURIComponent(this.url) : this.url;
         this.fullUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.configuredViewer === 'google' ?
-            `http://docs.google.com/gview?url=${u}&embedded=true` :
+            `https://docs.google.com/gview?url=${u}&embedded=true` :
             `https://view.officeapps.live.com/op/embed.aspx?src=${u}`);
     }
 
