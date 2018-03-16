@@ -25,6 +25,7 @@ export class NgxDocViewerComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     @Input() url: string;
+    @Input() googleCheckInterval = 3000;
     @Input() set style(style: string) {
         this.safeStyle = this.domSanitizer.bypassSecurityTrustStyle(style);
     }
@@ -58,7 +59,7 @@ export class NgxDocViewerComponent implements OnInit, AfterViewInit, OnDestroy {
                 const iframe = document.querySelector('iframe');
                 this.checkIFrame(iframe);
                 //max 10 seconds
-                this.checkIFrameSubscription = Observable.interval(500)
+                this.checkIFrameSubscription = Observable.interval(this.googleCheckInterval)
                     .take(20)
                     .subscribe(() => {
                         this.reloadIFrame(iframe);
