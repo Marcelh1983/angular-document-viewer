@@ -1,15 +1,21 @@
-import { Component, Input, EventEmitter, Output, AfterViewInit, NgZone, OnInit } from '@angular/core';
+import { Component, Input, EventEmitter, Output, AfterViewInit, NgZone, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeUrl, SafeResourceUrl, SafeStyle } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/filter';
 
 @Component({
     selector: 'ngx-doc-viewer',
     template: `<iframe id="iframe" *ngIf="fullUrl" [style]="safeStyle" frameBorder="0" [src]="fullUrl"></iframe> `
 })
-export class NgxDocViewerComponent implements OnInit, AfterViewInit {
+export class NgxDocViewerComponent implements OnInit, AfterViewInit, OnDestroy {
+
 
     public fullUrl: SafeResourceUrl;
     public safeStyle: SafeStyle;
+    private checkIFrameSubscription: Subscription;
     private configuredViewer = "google";
 
     constructor(private domSanitizer: DomSanitizer, private ngZone: NgZone) {
@@ -30,6 +36,12 @@ export class NgxDocViewerComponent implements OnInit, AfterViewInit {
         this.configuredViewer = v;
     }
 
+    ngOnDestroy(): void {
+        if (this.checkIFrameSubscription) {
+            this.checkIFrameSubscription.unsubscribe();
+        }
+    }
+
     ngOnInit(): void {
         const u = this.url.indexOf('/') ? encodeURIComponent(this.url) : this.url;
         this.fullUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.configuredViewer === 'google' ?
@@ -43,23 +55,25 @@ export class NgxDocViewerComponent implements OnInit, AfterViewInit {
         // would maybe be better to use view.officeapps.live.com but seems not to work with sas token.
         if (this.configuredViewer === "google") {
             this.ngZone.runOutsideAngular(() => {
-                let iFrameInHtml = false;
-                const timerId = setInterval(() => {
-                    iFrameInHtml = !!document.querySelector('iframe');
-                    if (iFrameInHtml) {
-                        clearInterval(timerId);
-                        this.checkIFrame();
-                    }
-                }, 200);
+                const iframe = document.querySelector('iframe');
+                this.checkIFrame(iframe);
+                //max 10 seconds
+                this.checkIFrameSubscription = Observable.interval(500)
+                    .take(20)
+                    .subscribe(() => {
+                        this.reloadIFrame(iframe);
+                    })
             });
         }
     }
 
-    checkIFrame() {
-        const iframe = document.querySelector('iframe');
-        const timerId = setInterval(() => this.reloadIFrame(iframe), 2000);
+    checkIFrame(iframe: HTMLIFrameElement) {
         if (iframe) {
-            iframe.onload = () => clearInterval(timerId);
+            iframe.onload = () => {
+                if (this.checkIFrameSubscription) {
+                    this.checkIFrameSubscription.unsubscribe();
+                }
+            };
         }
     }
 
