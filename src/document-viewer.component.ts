@@ -1,10 +1,8 @@
-import { Component, Input, EventEmitter, Output, AfterViewInit, NgZone, OnInit, OnDestroy } from '@angular/core';
-import { DomSanitizer, SafeUrl, SafeResourceUrl, SafeStyle } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/observable/interval';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/filter';
+import { Component, Input, AfterViewInit, NgZone, OnInit, OnDestroy } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl, SafeStyle } from '@angular/platform-browser';
+import { interval, Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
+
 
 @Component({
     selector: 'ngx-doc-viewer',
@@ -59,11 +57,12 @@ export class NgxDocViewerComponent implements OnInit, AfterViewInit, OnDestroy {
                 const iframe = document.querySelector('iframe');
                 this.checkIFrame(iframe);
                 //max 10 seconds
-                this.checkIFrameSubscription = Observable.interval(this.googleCheckInterval)
-                    .take(20)
+                this.checkIFrameSubscription = interval(this.googleCheckInterval)
+                    .pipe(
+                        take(20))
                     .subscribe(() => {
                         this.reloadIFrame(iframe);
-                    })
+                    });
             });
         }
     }
