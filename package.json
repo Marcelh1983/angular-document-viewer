@@ -1,6 +1,6 @@
 {
     "name": "ngx-doc-viewer",
-    "version": "0.1.5",
+    "version": "0.1.7",
     "description": "Angular document viewer.",
     "main": "index.js",
     "scripts": {
@@ -33,10 +33,10 @@
         "zone.js": "^0.8.26",
         "del": "^3.0.0",
         "gulp": "^3.9.1",
-        "gulp-bump": "^3.1.1",
-        "gulp-typescript": "^4.0.2",
-        "merge2": "^1.2.2",
-        "typescript": "^2.7.2",
+        "gulp-bump": "^2.9.0",
+        "gulp-typescript": "^3.2.4",
+        "merge2": "^1.2.1",
+        "typescript": "2.7.2",
         "ts-lint": "4.5.1"
     },
     "peerDependencies": {
