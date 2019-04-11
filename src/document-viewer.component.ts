@@ -1,8 +1,7 @@
 import { Component, Input, AfterViewInit, NgZone, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeStyle } from '@angular/platform-browser';
-import { interval, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-
+import { Subscription, interval } from 'rxjs';
 
 @Component({
     selector: 'ngx-doc-viewer',
@@ -10,11 +9,10 @@ import { take } from 'rxjs/operators';
 })
 export class NgxDocViewerComponent implements OnInit, AfterViewInit, OnDestroy {
 
-
     public fullUrl: SafeResourceUrl;
     public safeStyle: SafeStyle;
     private checkIFrameSubscription: Subscription;
-    private configuredViewer = "google";
+    private configuredViewer = 'google';
 
     constructor(private domSanitizer: DomSanitizer, private ngZone: NgZone) {
         if (!this.safeStyle) {
@@ -31,7 +29,7 @@ export class NgxDocViewerComponent implements OnInit, AfterViewInit, OnDestroy {
         const v = viewer.toLowerCase().trim();
         if (v !== 'google' && v !== 'office') {
             console.error(`Unsupported viewer: '${viewer}'. Supported viewers: google, office`);
-        };
+        }
         this.configuredViewer = v;
     }
 
@@ -52,11 +50,11 @@ export class NgxDocViewerComponent implements OnInit, AfterViewInit, OnDestroy {
         // see: https://stackoverflow.com/questions/40414039/google-docs-viewer-returning-204-responses-no-longer-working-alternatives
         // hack to reload iframe if it's not loaded.
         // would maybe be better to use view.officeapps.live.com but seems not to work with sas token.
-        if (this.configuredViewer === "google") {
+        if (this.configuredViewer === 'google') {
             this.ngZone.runOutsideAngular(() => {
                 const iframe = document.querySelector('iframe');
                 this.checkIFrame(iframe);
-                //max 10 seconds
+                // max 10 seconds
                 this.checkIFrameSubscription = interval(this.googleCheckInterval)
                     .pipe(
                         take(20))

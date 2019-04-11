@@ -6,6 +6,5 @@ import { CommonModule } from '@angular/common';
     imports: [CommonModule],
     declarations: [NgxDocViewerComponent],
     exports: [NgxDocViewerComponent]
-    
 })
 export class NgxDocViewerModule { }
