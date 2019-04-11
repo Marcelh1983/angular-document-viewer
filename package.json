@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "build": "gulp clean && gulp compile && gulp copy",
-        "publish": "npm run build && gulp bump && gulp copy && gulp git-add && gulp git-commit && gulp git-push && gulp publish"
+        "publish": "npm run build && gulp copy && gulp publish"
     },
     "repository": {
         "type": "git",
@@ -24,26 +24,30 @@
     "dependencies": {},
     "devDependencies": {
         "@angular/common": "^7.0.0",
-        "@angular/core": "^7.0.0",
-        "@angular/platform-browser": "^7.0.0",
         "@angular/compiler": "^7.0.0",
         "@angular/compiler-cli": "^7.0.0",
-        "codelyzer": "4.5.0",
-        "rxjs": "^6.3.0",
-        "zone.js": "^0.8.26",
-        "del": "^3.0.0",
-        "gulp": "^3.9.1",
-        "gulp-bump": "^2.9.0",
-        "gulp-typescript": "^5.0.0-alpha.3",
+        "@angular/core": "^7.0.0",
+        "@angular/platform-browser": "^7.0.0",
+        "@angular/platform-browser-dynamic": "^7.0.0",
+        "@angular/router": "^7.0.0",
+        "codelyzer": "~5.0.0",
+        "core-js": "^2.6.5",
+        "del": "^4.0.0",
+        "gulp": "^3.9.0",
+        "gulp-bump": "^3.1.0",
+        "gulp-typescript": "^5.0.1",
         "merge2": "^1.2.3",
-        "typescript": "3.1.4",
-        "ts-lint": "4.5.1"
+        "rxjs": "^6.3.0",
+        "tslint": "^5.15.0",
+        "typedoc": "^0.14.2",
+        "typescript": "3.1.6",
+        "zone.js": "^0.8.26"
     },
     "peerDependencies": {
         "@angular/common": "^7.0.0",
         "@angular/core": "^7.0.0",
         "@angular/platform-browser": "^7.0.0",
         "@angular/router": "^7.0.0",
-        "zone.js": "^0.8.26"
+        "zone.js": "^0.8.29"
     }
 }
