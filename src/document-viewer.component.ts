@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit, NgZone, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, AfterViewInit, NgZone, OnInit, OnDestroy, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeStyle } from '@angular/platform-browser';
 import { take } from 'rxjs/operators';
 import { Subscription, interval } from 'rxjs';
@@ -7,7 +7,7 @@ import { Subscription, interval } from 'rxjs';
     selector: 'ngx-doc-viewer',
     template: `<iframe id="iframe" *ngIf="fullUrl" [style]="safeStyle" frameBorder="0" [src]="fullUrl"></iframe> `
 })
-export class NgxDocViewerComponent implements OnInit, AfterViewInit, OnDestroy {
+export class NgxDocViewerComponent implements OnChanges, OnDestroy {
 
     public fullUrl: SafeResourceUrl;
     public safeStyle: SafeStyle;
@@ -21,7 +21,7 @@ export class NgxDocViewerComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     @Input() url: string;
-    @Input() googleCheckInterval = 3000;
+    @Input() googleCheckInterval = 200;
     @Input() set style(style: string) {
         this.safeStyle = this.domSanitizer.bypassSecurityTrustStyle(style);
     }
@@ -39,32 +39,30 @@ export class NgxDocViewerComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    ngOnInit(): void {
-        const u = this.url.indexOf('/') ? encodeURIComponent(this.url) : this.url;
-        this.fullUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.configuredViewer === 'google' ?
-            `https://docs.google.com/gview?url=${u}&embedded=true` :
-            `https://view.officeapps.live.com/op/embed.aspx?src=${u}`);
-    }
-
-    ngAfterViewInit(): void {
-        // see: https://stackoverflow.com/questions/40414039/google-docs-viewer-returning-204-responses-no-longer-working-alternatives
-        // hack to reload iframe if it's not loaded.
-        // would maybe be better to use view.officeapps.live.com but seems not to work with sas token.
-        if (this.configuredViewer === 'google') {
-            this.ngZone.runOutsideAngular(() => {
-                const iframe = document.querySelector('iframe');
-                this.checkIFrame(iframe);
-                // max 10 seconds
-                this.checkIFrameSubscription = interval(this.googleCheckInterval)
-                    .pipe(
-                        take(20))
-                    .subscribe(() => {
-                        this.reloadIFrame(iframe);
-                    });
-            });
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.url && changes.url.currentValue !== changes.url.previousValue) {
+            const u = this.url.indexOf('/') ? encodeURIComponent(this.url) : this.url;
+            this.fullUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.configuredViewer === 'google' ?
+                `https://docs.google.com/gview?url=${u}&embedded=true` :
+                `https://view.officeapps.live.com/op/embed.aspx?src=${u}`);
+            // see: https://stackoverflow.com/questions/40414039/google-docs-viewer-returning-204-responses-no-longer-working-alternatives
+            // hack to reload iframe if it's not loaded.
+            // would maybe be better to use view.officeapps.live.com but seems not to work with sas token.
+            if (this.configuredViewer === 'google') {
+                this.ngZone.runOutsideAngular(() => {
+                    const iframe = document.querySelector('iframe');
+                    this.checkIFrame(iframe);
+                    // max 10 seconds
+                    this.checkIFrameSubscription = interval(this.googleCheckInterval)
+                        .pipe(
+                            take(Math.round(this.googleCheckInterval / 10000)))
+                        .subscribe(() => {
+                            this.reloadIFrame(iframe);
+                        });
+                });
+            }
         }
     }
-
     checkIFrame(iframe: HTMLIFrameElement) {
         if (iframe) {
             iframe.onload = () => {
