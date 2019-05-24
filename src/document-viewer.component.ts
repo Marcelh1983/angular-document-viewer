@@ -56,7 +56,7 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
                     // if it's not loaded after the googleIntervalCheck, then open load again.
                     this.checkIFrameSubscription = interval(this.googleCheckInterval)
                         .pipe(
-                            take(Math.round(this.googleCheckInterval / 10000)))
+                            take(Math.round(this.googleCheckInterval === 0 ? 0 : 10000 / this.googleCheckInterval)))
                         .subscribe(() => {
                             this.reloadIFrame(iframe);
                         });
