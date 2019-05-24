@@ -1,7 +1,8 @@
-import { Component, Input, AfterViewInit, NgZone, OnInit, OnDestroy, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, Input, NgZone, OnDestroy, OnChanges, SimpleChanges, Output } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeStyle } from '@angular/platform-browser';
 import { take } from 'rxjs/operators';
 import { Subscription, interval } from 'rxjs';
+import { EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'ngx-doc-viewer',
@@ -19,9 +20,9 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
             this.safeStyle = this.domSanitizer.bypassSecurityTrustStyle('width:100%;height:50vh;');
         }
     }
-
+    @Output() loaded: EventEmitter<any> = new EventEmitter();
     @Input() url: string;
-    @Input() googleCheckInterval = 200;
+    @Input() googleCheckInterval = 3000;
     @Input() set style(style: string) {
         this.safeStyle = this.domSanitizer.bypassSecurityTrustStyle(style);
     }
@@ -52,7 +53,7 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
                 this.ngZone.runOutsideAngular(() => {
                     const iframe = document.querySelector('iframe');
                     this.checkIFrame(iframe);
-                    // max 10 seconds
+                    // if it's not loaded after the googleIntervalCheck, then open load again.
                     this.checkIFrameSubscription = interval(this.googleCheckInterval)
                         .pipe(
                             take(Math.round(this.googleCheckInterval / 10000)))
@@ -66,6 +67,7 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
     checkIFrame(iframe: HTMLIFrameElement) {
         if (iframe) {
             iframe.onload = () => {
+                this.loaded.emit(null);
                 if (this.checkIFrameSubscription) {
                     this.checkIFrameSubscription.unsubscribe();
                 }

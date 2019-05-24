@@ -29,6 +29,10 @@ npm install ngx-doc-viewer --save
 
 #### API:
 
+Input: 
 - url: document url.
 - viewer: google or office
 - style
+
+Output:
+- loaded: google only, notifies when iframe is loaded. Can be used to show progress while loading
