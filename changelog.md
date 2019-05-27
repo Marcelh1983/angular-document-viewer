@@ -1,4 +1,12 @@
 # 0.1.16 (5/24/2019)
+# 0.1.19 (5/27/2019)
+* if iframe is null initially try to get it while polling if loaded.
+* try for 20 seconds to load document
+
+# 0.1.17 (5/24/2019)
+* fixed interval reload check
+
+# 0.1.16 (5/24/2019)
 * fixed wrong import of Event type
 
 # 0.1.15 (5/20/2019)

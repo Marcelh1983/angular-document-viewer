@@ -51,13 +51,17 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
             // would maybe be better to use view.officeapps.live.com but seems not to work with sas token.
             if (this.configuredViewer === 'google') {
                 this.ngZone.runOutsideAngular(() => {
-                    const iframe = document.querySelector('iframe');
+                    let iframe = document.querySelector('iframe');
                     this.checkIFrame(iframe);
                     // if it's not loaded after the googleIntervalCheck, then open load again.
                     this.checkIFrameSubscription = interval(this.googleCheckInterval)
                         .pipe(
-                            take(Math.round(this.googleCheckInterval === 0 ? 0 : 10000 / this.googleCheckInterval)))
+                            take(Math.round(this.googleCheckInterval === 0 ? 0 : 20000 / this.googleCheckInterval)))
                         .subscribe(() => {
+                            if (iframe == null) {
+                                iframe = document.querySelector('iframe');
+                                this.checkIFrame(iframe);
+                            }
                             this.reloadIFrame(iframe);
                         });
                 });

@@ -1,6 +1,6 @@
 {
     "name": "ngx-doc-viewer",
-    "version": "0.1.16",
+    "version": "0.1.19",
     "description": "Angular document viewer.",
     "main": "./dist/index.js",
     "ngPackage": {
