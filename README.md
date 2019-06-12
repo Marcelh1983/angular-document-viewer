@@ -4,8 +4,12 @@
 
 This component uses google document viewer or the office365 viewer to show documents.
 
-The office viewer supports: .ppt, .pptx, .doc, .docx, .xls and .xlsx
-The google viewer supports:
+## File type support
+
+### office viewer
+.ppt, .pptx, .doc, .docx, .xls and .xlsx
+
+### google viewer
 
 Only files under 25 MB can be previewed with the Google Drive viewer.
 
