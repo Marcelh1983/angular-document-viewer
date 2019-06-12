@@ -2,8 +2,9 @@
     "name": "ngx-doc-viewer",
     "version": "0.1.20",
     "description": "Angular document viewer.",
-    "main": "./dist/index.js",
+    "main": "./package/index.js",
     "ngPackage": {
+        "dest": "package",
         "lib": {
             "entryFile": "modules/index.ts"
         },
@@ -13,7 +14,7 @@
     },
     "scripts": {
         "build": "ng-packagr -p package.json",
-        "publish": "ng-packagr -p package.json && npm publish ./dist",
+        "publish": "ng-packagr -p package.json && npm publish ./package",
         "start": "ng serve --port 4201"
     },
     "repository": {
