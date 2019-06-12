@@ -1,4 +1,7 @@
-# 0.1.16 (5/24/2019)
+# 0.1.20 (6/12/2019)
+* use angular8
+* act on viewer change
+
 # 0.1.19 (5/27/2019)
 * if iframe is null initially try to get it while polling if loaded.
 * try for 20 seconds to load document
