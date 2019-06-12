@@ -2,7 +2,35 @@
 
 # ngx-doc-viewer
 
-This component uses google document viewer or the office365 viewer to show a pdf or word document.
+This component uses google document viewer or the office365 viewer to show documents.
+
+The office viewer supports: .ppt, .pptx, .doc, .docx, .xls and .xlsx
+The google viewer supports:
+
+Only files under 25 MB can be previewed with the Google Drive viewer.
+
+Google Drive viewer helps you preview over 16 different file types, listed below:
+
+* Image files (.JPEG, .PNG, .GIF, .TIFF, .BMP)
+* Video files (WebM, .MPEG4, .3GPP, .MOV, .AVI, .MPEGPS, .WMV, .FLV)
+* Text files (.TXT)
+* Markup/Code (.CSS, .HTML, .PHP, .C, .CPP, .H, .HPP, .JS)
+* Microsoft Word (.DOC and .DOCX)
+* Microsoft Excel (.XLS and .XLSX)
+* Microsoft PowerPoint (.PPT and .PPTX)
+* Adobe Portable Document Format (.PDF)
+* Apple Pages (.PAGES)
+* Adobe Illustrator (.AI)
+* Adobe Photoshop (.PSD)
+* Tagged Image File Format (.TIFF)
+* Autodesk AutoCad (.DXF)
+* Scalable Vector Graphics (.SVG)
+* PostScript (.EPS, .PS)
+* TrueType (.TTF)
+* XML Paper Specification (.XPS)
+* Archive file types (.ZIP and .RAR)
+
+<a href="https://gist.githubusercontent.com/tzmartin/1cf85dc3d975f94cfddc04bc0dd399be/raw/d4263c8faf7b68f4bbfd33b386ec33ed2bc11e7d/embedded-file-viewer.md">Source</a>
 
 <a href="https://github.com/Marcelh1983/angular-document-viewer/blob/master/changelog.md">Changes</a>
 
