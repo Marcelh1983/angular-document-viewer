@@ -22,7 +22,7 @@ import { Component } from '@angular/core';
            (click)="setDocLocation('pdf')">.pdf</button>
         </ng-container>
         <input class="form-control w-100 m-2" type="text" placeholder="your document url" #input>
-        <button class="btn btn-outline-secondary m-2" (click)="doc = input.value; type = ''">Go</button>
+        <button class="btn btn-outline-secondary m-2" (click)="doc = input.value; selectedType = ''">Go</button>
       </div>
       <ngx-doc-viewer [url]="doc" [viewer]="viewer" style="width:100%;height:80vh;"></ngx-doc-viewer>
     </div>

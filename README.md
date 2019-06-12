@@ -4,6 +4,8 @@
 
 This component uses google document viewer or the office365 viewer to show documents.
 
+<a href="https://angular-doc-viewer.firebaseapp.com/">View demo</a>
+
 <a href="https://github.com/Marcelh1983/angular-document-viewer/blob/master/changelog.md">Changes</a>
 
 ### Install the NPM Module
