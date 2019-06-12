@@ -41,7 +41,8 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes.url && changes.url.currentValue !== changes.url.previousValue) {
+        if ((changes.url && changes.url.currentValue !== changes.url.previousValue) ||
+            changes.viewer && changes.viewer.currentValue !== changes.viewer.previousValue) {
             const u = this.url.indexOf('/') ? encodeURIComponent(this.url) : this.url;
             this.fullUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.configuredViewer === 'google' ?
                 `https://docs.google.com/gview?url=${u}&embedded=true` :
