@@ -48,9 +48,8 @@ Output:
 
 Only files under 25 MB can be previewed with the Google Drive viewer.
 
-Google Drive viewer helps you preview over 16 different file types, listed below:
+Google Drive viewer helps you preview over 15 different file types, listed below:
 
-* Image files (.TIFF)
 * Video files (WebM, .MPEG4, .3GPP, .MOV, .AVI, .MPEGPS, .WMV, .FLV)
 * Text files (.TXT)
 * Markup/Code (.CSS, .HTML, .PHP, .C, .CPP, .H, .HPP, .JS)
