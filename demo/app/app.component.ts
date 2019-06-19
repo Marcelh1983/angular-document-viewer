@@ -16,8 +16,8 @@ import { Component } from '@angular/core';
         <button [class.active]="selectedType === 'ppt'" class="btn btn-outline-secondary m-2"
          (click)="setDocLocation('ppt')">.ppt</button>
         <ng-container *ngIf="viewer === 'google'">
-          <button [class.active]="selectedType === 'png'" class="btn btn-outline-secondary m-2"
-           (click)="setDocLocation('png')">.png</button>
+          <button [class.active]="selectedType === 'tiff'" class="btn btn-outline-secondary m-2"
+           (click)="setDocLocation('tiff')">.tiff</button>
           <button [class.active]="selectedType === 'pdf'"class="btn btn-outline-secondary m-2"
            (click)="setDocLocation('pdf')">.pdf</button>
         </ng-container>
@@ -43,8 +43,8 @@ export class AppComponent {
       case 'xslx':
         this.doc = 'https://file-examples.com/wp-content/uploads/2017/02/file_example_XLSX_10.xlsx';
         break;
-      case 'png':
-        this.doc = 'https://file-examples.com/wp-content/uploads/2017/10/file_example_PNG_500kB.png';
+      case 'tiff':
+        this.doc = 'https://file-examples.com/wp-content/uploads/2017/10/file_example_TIFF_1MB.tiff';
         break;
       case 'pdf':
         this.doc = 'https://file-examples.com/wp-content/uploads/2017/10/file-sample_150kB.pdf';
