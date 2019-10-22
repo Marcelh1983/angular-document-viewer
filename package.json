@@ -51,7 +51,7 @@
         "ng-packagr": "^5.7.0",
         "rxjs": "^6.5.3",
         "tslint": "^5.20.0",
-        "typescript": "3.5.3",
+        "typescript": "3.6.4",
         "zone.js": "^0.10.2"
     },
     "peerDependencies": {
