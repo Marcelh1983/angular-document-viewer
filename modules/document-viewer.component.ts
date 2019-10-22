@@ -6,7 +6,15 @@ import { EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'ngx-doc-viewer',
-    template: `<iframe id="iframe" *ngIf="fullUrl" [style]="safeStyle" frameBorder="0" [src]="fullUrl"></iframe> `
+    template: `<iframe id="iframe" *ngIf="fullUrl" frameBorder="0" [src]="fullUrl"></iframe> `,
+    styles: [`:host {
+        display: block;
+    }
+    iframe {
+        width: 100%;
+        height: 100%;
+    }
+    `]
 })
 export class NgxDocViewerComponent implements OnChanges, OnDestroy {
 
@@ -15,17 +23,10 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
     private checkIFrameSubscription: Subscription;
     private configuredViewer = 'google';
 
-    constructor(private domSanitizer: DomSanitizer, private ngZone: NgZone) {
-        if (!this.safeStyle) {
-            this.safeStyle = this.domSanitizer.bypassSecurityTrustStyle('width:100%;height:50vh;');
-        }
-    }
+    constructor(private domSanitizer: DomSanitizer, private ngZone: NgZone) { }
     @Output() loaded: EventEmitter<any> = new EventEmitter();
     @Input() url: string;
     @Input() googleCheckInterval = 3000;
-    @Input() set style(style: string) {
-        this.safeStyle = this.domSanitizer.bypassSecurityTrustStyle(style);
-    }
     @Input() set viewer(viewer: string) {
         const v = viewer.toLowerCase().trim();
         if (v !== 'google' && v !== 'office') {
