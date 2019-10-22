@@ -1,3 +1,6 @@
+# 0.1.21 (10/22/2019)
+* support for angular9
+
 # 0.1.20 (6/12/2019)
 * use angular8
 * act on viewer change
