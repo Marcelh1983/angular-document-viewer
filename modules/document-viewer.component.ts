@@ -17,15 +17,13 @@ import { EventEmitter } from '@angular/core';
     `]
 })
 export class NgxDocViewerComponent implements OnChanges, OnDestroy {
-
-    public fullUrl: SafeResourceUrl;
-    public safeStyle: SafeStyle;
-    private checkIFrameSubscription: Subscription;
+    public fullUrl: SafeResourceUrl = null;
+    private checkIFrameSubscription: Subscription = null;
     private configuredViewer = 'google';
 
     constructor(private domSanitizer: DomSanitizer, private ngZone: NgZone) { }
     @Output() loaded: EventEmitter<any> = new EventEmitter();
-    @Input() url: string;
+    @Input() url = '';
     @Input() googleCheckInterval = 3000;
     @Input() set viewer(viewer: string) {
         const v = viewer.toLowerCase().trim();
