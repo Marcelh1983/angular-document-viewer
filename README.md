@@ -3,7 +3,7 @@
 # ngx-doc-viewer
 
 This component uses google document viewer or the office365 viewer to show documents.
-Documents should be publicly available. The files can have a shared access signature (SAS) though I had some problems with these SAS tokens in combination with the Office viewer. So local files and blobs/ObjectUrls are not supported.
+Documents should be publicly available. So local files and blobs/ObjectUrls are not supported.
 
 <a href="https://angular-doc-viewer.firebaseapp.com/">View demo</a>
 
@@ -35,7 +35,11 @@ npm install ngx-doc-viewer --save
 Input: 
 - url: document url.
 - viewer: google or office
-
+- disableContent: 'none' | 'all' | 'popout' | 'popout-hide' = 'none': 
+    - none: no popup
+    - all: adds an overlay to the whole iframe, which makes nothing in the document clickable/selectable
+    - popout: adds an overlay over googles popout button which disables just this button but keeps giving the possibility to select text (exept for). The popout button is still visible a few seconds but not clickable.
+    - popout-hide: see popup, instead of an transparent overlay a white one. This really hides the button but you'll see a white block while loading.
 
 There are some issues loading document in the google viewer. See: https://stackoverflow.com/questions/40414039/google-docs-viewer-returning-204-responses-no-longer-working-alternatives. If loading pdf's and Word documents, seems to work now with this hack let me know via a Github issue. 
 

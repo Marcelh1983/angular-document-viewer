@@ -1,3 +1,6 @@
+# 0.1.27 (01/08/2019)
+* added option to add an overlay to disable/hide googles popout button, and/or selecting text.
+
 # 0.1.26 (01/08/2019)
 * fix for error when url is changed from != null to null
 
