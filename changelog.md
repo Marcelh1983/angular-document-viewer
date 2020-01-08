@@ -1,3 +1,9 @@
+# 0.1.26 (01/08/2019)
+* fix for error when url is changed from != null to null
+
+# 0.1.25 (10/25/2019)
+* added googleCheckContentLoaded to be able to skip the check if the iframe content is loaded
+
 # 0.1.21 (10/22/2019)
 * support for angular9
 

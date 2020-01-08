@@ -5,8 +5,8 @@ import { Component } from '@angular/core';
   template: `
     <div style="text-align:center">
     <div class="d-flex">
-      <button [class.active]="viewer == 'google'" class="btn btn-outline-primary m-2" (click)="viewer = 'google'">Google viewer</button>
-      <button [class.active]="viewer == 'office'" class="btn btn-outline-primary m-2" (click)="viewer = 'office'">Office viewer</button>
+      <button [class.active]="viewer === 'google'" class="btn btn-outline-primary m-2" (click)="viewer = 'google'">Google viewer</button>
+      <button [class.active]="viewer === 'office'" class="btn btn-outline-primary m-2" (click)="viewer = 'office'">Office viewer</button>
     </div>
       <div class="d-flex">
         <button [class.active]="selectedType === 'docx'" class="btn btn-outline-secondary m-2"
