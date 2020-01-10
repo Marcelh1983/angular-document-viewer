@@ -1,6 +1,6 @@
 {
     "name": "ngx-doc-viewer",
-    "version": "0.1.27",
+    "version": "1.0.0-beta.1",
     "description": "Angular document viewer.",
     "main": "./package/index.js",
     "ngPackage": {
@@ -14,7 +14,8 @@
     },
     "scripts": {
         "build": "ng-packagr -p package.json",
-        "publish": "ng-packagr -p package.json && npm publish ./package",
+        "publish": "ng-packagr -p package.json && npm publish ./package --tag latest",
+        "publish-next": "ng-packagr -p package.json && npm publish ./package --tag next",
         "start": "ng serve --port 4201"
     },
     "repository": {
@@ -48,6 +49,7 @@
         "@types/node": "~13.1.4",
         "codelyzer": "~5.2.1",
         "bootstrap": "4.4.1",
+        "mammoth": "1.4.9",
         "ng-packagr": "^5.7.1",
         "rxjs": "^6.5.4",
         "tslint": "^5.20.1",

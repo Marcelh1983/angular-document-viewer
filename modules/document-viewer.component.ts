@@ -4,20 +4,12 @@ import { take } from 'rxjs/operators';
 import { Subscription, interval } from 'rxjs';
 import { EventEmitter } from '@angular/core';
 
+declare var mammoth;
+
+export type viewerType = 'google' | 'office' | 'mammoth' | 'pdfjs';
 @Component({
     selector: 'ngx-doc-viewer',
-    template: `
-        <iframe *ngIf="fullUrl && disableContent === 'none'" id="iframe" frameBorder="0" [src]="fullUrl"></iframe>
-        <div class="container" *ngIf="disableContent !== 'none'">
-            <div
-                [class.overlay-full]="disableContent === 'all'"
-                [class.overlay-popout]="disableContent === 'popout' || disableContent === 'popout-hide'"
-                [style.background-color]="disableContent === 'popout-hide' ? '#fff': 'transparent'"
-            >
-            </div>
-            <iframe *ngIf="fullUrl" id="iframe"  frameBorder="0" [src]="fullUrl"></iframe>
-        </div>
-    `,
+    templateUrl: 'document-viewer.component.html',
     styles: [`:host {
         display: block;
     }
@@ -50,8 +42,10 @@ import { EventEmitter } from '@angular/core';
 })
 export class NgxDocViewerComponent implements OnChanges, OnDestroy {
     public fullUrl: SafeResourceUrl = null;
+    public externalViewer = false;
+    public docHtml = '';
     private checkIFrameSubscription: Subscription = null;
-    private configuredViewer = 'google';
+    private configuredViewer: viewerType = 'google';
 
     constructor(private domSanitizer: DomSanitizer, private ngZone: NgZone) { }
     @Output() loaded: EventEmitter<any> = new EventEmitter();
@@ -59,12 +53,16 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
     @Input() googleCheckInterval = 3000;
     @Input() disableContent: 'none' | 'all' | 'popout' | 'popout-hide' = 'none';
     @Input() googleCheckContentLoaded = true;
-    @Input() set viewer(viewer: string) {
-        const v = viewer.toLowerCase().trim();
-        if (v !== 'google' && v !== 'office') {
-            console.error(`Unsupported viewer: '${viewer}'. Supported viewers: google, office`);
+    @Input() set viewer(viewer: viewerType) {
+        if (viewer !== 'google' && viewer !== 'office' && viewer !== 'mammoth') {
+            console.error(`Unsupported viewer: '${viewer}'. Supported viewers: google, office and mammoth`);
         }
-        this.configuredViewer = v;
+        if (viewer === 'mammoth') {
+            if (mammoth === null) {
+                console.error('please install mammoth when using local viewer');
+            }
+        }
+        this.configuredViewer = viewer;
     }
     ngOnDestroy(): void {
         if (this.checkIFrameSubscription) {
@@ -72,19 +70,22 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    async ngOnChanges(changes: SimpleChanges): Promise<void> {
         if ((changes.url && changes.url.currentValue !== changes.url.previousValue) ||
             changes.viewer && changes.viewer.currentValue !== changes.viewer.previousValue) {
+            this.docHtml = '';
+            this.externalViewer = this.configuredViewer === 'google' || this.configuredViewer === 'office';
             if (this.checkIFrameSubscription) {
                 this.checkIFrameSubscription.unsubscribe();
             }
             if (!this.url) {
                 this.fullUrl = null;
-            } else {
+            } else if (this.configuredViewer === 'office' || this.configuredViewer === 'google') {
                 const u = this.url.indexOf('/') ? encodeURIComponent(this.url) : this.url;
-                this.fullUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.configuredViewer === 'google' ?
-                    `https://docs.google.com/gview?url=${u}&embedded=true` :
-                    `https://view.officeapps.live.com/op/embed.aspx?src=${u}`);
+                this.fullUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
+                    this.configuredViewer === 'google' ?
+                        `https://docs.google.com/gview?url=${u}&embedded=true` :
+                        `https://view.officeapps.live.com/op/embed.aspx?src=${u}`);
                 // see:
                 // https://stackoverflow.com/questions/40414039/google-docs-viewer-returning-204-responses-no-longer-working-alternatives
                 // hack to reload iframe if it's not loaded.
@@ -106,6 +107,8 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
                             });
                     });
                 }
+            } else if (this.configuredViewer === 'mammoth') {
+                this.docHtml = await this.getDocxToHtml(this.url);
             }
         }
     }
@@ -125,5 +128,31 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
             console.log('reloading..');
             iframe.src = iframe.src;
         }
+    }
+
+    private async getDocxToHtml(url: string) {
+        const arrayBuffer = await this.fileToArray(url);
+        const resultObject = await mammoth.convertToHtml({ arrayBuffer });
+        return resultObject.value;
+    }
+
+    private fileToArray(url: string): Promise<ArrayBuffer> {
+        return new Promise<ArrayBuffer>((resolve, reject) => {
+            try {
+                const request = new XMLHttpRequest();
+                request.open('GET', url, true);
+                request.responseType = 'blob';
+                request.onload = () => {
+                    const reader = new FileReader();
+                    reader.readAsArrayBuffer(request.response);
+                    reader.onloadend = (e) => {
+                        resolve(reader.result as ArrayBuffer);
+                    };
+                };
+                request.send();
+            } catch {
+                reject(`error while retrieving file ${url}.`);
+            }
+        });
     }
 }

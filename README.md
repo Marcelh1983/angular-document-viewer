@@ -3,7 +3,7 @@
 # ngx-doc-viewer
 
 This component uses google document viewer or the office365 viewer to show documents.
-Documents should be publicly available. So local files and blobs/ObjectUrls are not supported.
+Documents should be publicly available. So local files and blobs/ObjectUrls are only supported with mammoth viewer.
 
 <a href="https://angular-doc-viewer.firebaseapp.com/">View demo</a>
 
@@ -13,6 +13,19 @@ Documents should be publicly available. So local files and blobs/ObjectUrls are 
 ```sh
 npm install ngx-doc-viewer --save
 ```
+
+To use mammoth, also add: 
+```sh
+npm install mammoth --save
+```
+and make sure mammoth.browser.min.js is loaded. For the angular/cli you would add the following in angular.json:
+
+```json
+    "scripts": [
+        "node_modules/mammoth/mammoth.browser.min.js"
+    ]
+```
+
 ### Usage
 
 #### 1. Import `NgxDocViewerModule` 
@@ -30,11 +43,13 @@ npm install ngx-doc-viewer --save
     <ngx-doc-viewer [url]="doc" viewer="google" style="width:100%;height:50vh;"></ngx-doc-viewer>
 ```
 
+To 
+
 #### API:
 
 Input: 
 - url: document url.
-- viewer: google or office
+- viewer: google, office, mammoth
 - disableContent: 'none' | 'all' | 'popout' | 'popout-hide' = 'none': 
     - none: no popup
     - all: adds an overlay to the whole iframe, which makes nothing in the document clickable/selectable
@@ -50,6 +65,10 @@ Output:
 - loaded: google only, notifies when iframe is loaded. Can be used to show progress while loading 
 
 ### File type support
+
+### mammoth
+
+.docx
 
 #### office viewer
 .ppt, .pptx, .doc, .docx, .xls and .xlsx

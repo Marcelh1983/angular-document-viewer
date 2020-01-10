@@ -1,0 +1,28 @@
+<ng-container *ngIf="!externalViewer">
+    <div [innerHtml]="docHtml"></div>
+</ng-container>
+<ng-container *ngIf="externalViewer">
+    <iframe
+        *ngIf="fullUrl && disableContent === 'none'"
+        id="iframe"
+        frameBorder="0"
+        [src]="fullUrl"
+    ></iframe>
+    <div
+        class="container"
+        *ngIf="disableContent !== 'none'"
+    >
+        <div
+            [class.overlay-full]="disableContent === 'all'"
+            [class.overlay-popout]="disableContent === 'popout' || disableContent === 'popout-hide'"
+            [style.background-color]="disableContent === 'popout-hide' ? '#fff': 'transparent'"
+        >
+        </div>
+        <iframe
+            *ngIf="fullUrl"
+            id="iframe"
+            frameBorder="0"
+            [src]="fullUrl"
+        ></iframe>
+    </div>
+</ng-container>
