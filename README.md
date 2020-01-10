@@ -2,8 +2,11 @@
 
 # ngx-doc-viewer
 
-This component uses google document viewer or the office365 viewer to show documents.
-Documents should be publicly available. So local files and blobs/ObjectUrls are only supported with mammoth viewer.
+This component can be used to show several different document types in an Angular app.
+
+Documents that are publicly available can be shown in an iframe using the google of office document viewer.
+
+Pdf files and word document that are not publicly available can be shown using the mammoth viewer or pdf viewer by passing an objectUrl.
 
 <a href="https://angular-doc-viewer.firebaseapp.com/">View demo</a>
 
@@ -49,9 +52,9 @@ To
 
 Input: 
 - url: document url.
-- viewer: google, office, mammoth
+- viewer: google (default), office, mammoth or pdf
 - disableContent: 'none' | 'all' | 'popout' | 'popout-hide' = 'none': 
-    - none: no popup
+    - none: no overlay
     - all: adds an overlay to the whole iframe, which makes nothing in the document clickable/selectable
     - popout: adds an overlay over googles popout button which disables just this button but keeps giving the possibility to select text (exept for). The popout button is still visible a few seconds but not clickable.
     - popout-hide: see popup, instead of an transparent overlay a white one. This really hides the button but you'll see a white block while loading.
@@ -65,6 +68,10 @@ Output:
 - loaded: google only, notifies when iframe is loaded. Can be used to show progress while loading 
 
 ### File type support
+
+### pdf
+
+.pdf
 
 ### mammoth
 

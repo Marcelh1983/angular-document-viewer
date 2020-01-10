@@ -7,7 +7,7 @@ import { viewerType } from 'modules/document-viewer.component';
   styles: []
 })
 export class AppComponent {
-  viewers: { name: viewerType, docs: string[], custom: boolean, upload: boolean }[] = [
+  viewers: { name: viewerType, docs: string[], custom: boolean, acceptedUploadTypes: string }[] = [
     {
       name: 'google', docs: [
         'https://file-examples.com/wp-content/uploads/2017/02/file-sample_100kB.docx',
@@ -15,7 +15,7 @@ export class AppComponent {
         'https://file-examples.com/wp-content/uploads/2017/10/file_example_TIFF_1MB.tiff',
         'https://file-examples.com/wp-content/uploads/2017/10/file-sample_150kB.pdf',
         'https://file-examples.com/wp-content/uploads/2017/08/file_example_PPT_250kB.ppt'
-      ], custom: true, upload: false
+      ], custom: true, acceptedUploadTypes: null
     },
     {
       name: 'office', docs: [
@@ -24,12 +24,17 @@ export class AppComponent {
         'https://file-examples.com/wp-content/uploads/2017/10/file_example_TIFF_1MB.tiff',
         'https://file-examples.com/wp-content/uploads/2017/10/file-sample_150kB.pdf',
         'https://file-examples.com/wp-content/uploads/2017/08/file_example_PPT_250kB.ppt'
-      ], custom: true, upload: false
+      ], custom: true, acceptedUploadTypes: null
     },
     {
       name: 'mammoth', docs: [
         `${window.location.href}/assets/file-sample_100kB.docx`
-      ], custom: false, upload: true
+      ], custom: false, acceptedUploadTypes: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    },
+    {
+      name: 'pdf', docs: [
+        `${window.location.href}/assets/file-sample_150kB.pdf`
+      ], custom: false,  acceptedUploadTypes: 'application/pdf'
     }
   ];
   selectedViewer = this.viewers[0];

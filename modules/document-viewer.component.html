@@ -1,5 +1,14 @@
 <ng-container *ngIf="!externalViewer">
-    <div [innerHtml]="docHtml"></div>
+    <div
+        *ngIf="configuredViewer !== 'pdf'"
+        [innerHtml]="docHtml"
+    ></div>
+    <embed
+        *ngIf="configuredViewer === 'pdf'"
+        type="application/pdf"
+        [src]="fullUrl"
+        style="width: 100%; height: 100%;"
+    />
 </ng-container>
 <ng-container *ngIf="externalViewer">
     <iframe
@@ -14,7 +23,8 @@
     >
         <div
             [class.overlay-full]="disableContent === 'all'"
-            [class.overlay-popout]="disableContent === 'popout' || disableContent === 'popout-hide'"
+            [class.overlay-popout-google]="configuredViewer ==='google' && (disableContent === 'popout' || disableContent === 'popout-hide')"
+            [class.overlay-popout-office]="configuredViewer ==='office' && (disableContent === 'popout' || disableContent === 'popout-hide')"
             [style.background-color]="disableContent === 'popout-hide' ? '#fff': 'transparent'"
         >
         </div>

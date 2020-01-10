@@ -6,7 +6,7 @@ import { EventEmitter } from '@angular/core';
 
 declare var mammoth;
 
-export type viewerType = 'google' | 'office' | 'mammoth' | 'pdfjs';
+export type viewerType = 'google' | 'office' | 'mammoth' | 'pdf';
 @Component({
     selector: 'ngx-doc-viewer',
     templateUrl: 'document-viewer.component.html',
@@ -18,11 +18,19 @@ export type viewerType = 'google' | 'office' | 'mammoth' | 'pdfjs';
         height: 100%;
         position: relative;
     }
-    .overlay-popout {
+    .overlay-popout-google {
         width: 40px;
         height: 40px;
         right: 26px;
         top: 11.5px;
+        position: absolute;
+        z-index: 1000;
+    }
+    .overlay-popout-office {
+        width: 100px;
+        height: 20px;
+        right: 0;
+        bottom: 0;
         position: absolute;
         z-index: 1000;
     }
@@ -44,18 +52,18 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
     public fullUrl: SafeResourceUrl = null;
     public externalViewer = false;
     public docHtml = '';
+    public configuredViewer: viewerType = 'google';
     private checkIFrameSubscription: Subscription = null;
-    private configuredViewer: viewerType = 'google';
 
     constructor(private domSanitizer: DomSanitizer, private ngZone: NgZone) { }
     @Output() loaded: EventEmitter<any> = new EventEmitter();
     @Input() url = '';
     @Input() googleCheckInterval = 3000;
-    @Input() disableContent: 'none' | 'all' | 'popout' | 'popout-hide' = 'none';
+    @Input() disableContent: 'none' | 'all' |  'popout' | 'popout-hide' = 'none';
     @Input() googleCheckContentLoaded = true;
     @Input() set viewer(viewer: viewerType) {
-        if (viewer !== 'google' && viewer !== 'office' && viewer !== 'mammoth') {
-            console.error(`Unsupported viewer: '${viewer}'. Supported viewers: google, office and mammoth`);
+        if (viewer !== 'google' && viewer !== 'office' && viewer !== 'mammoth' && viewer !== 'pdf') {
+            console.error(`Unsupported viewer: '${viewer}'. Supported viewers: google, office, mammoth and pdf`);
         }
         if (viewer === 'mammoth') {
             if (mammoth === null) {
@@ -71,6 +79,9 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
     }
 
     async ngOnChanges(changes: SimpleChanges): Promise<void> {
+        if (this.disableContent !== 'none' && this.viewer !== 'google') {
+
+        }
         if ((changes.url && changes.url.currentValue !== changes.url.previousValue) ||
             changes.viewer && changes.viewer.currentValue !== changes.viewer.previousValue) {
             this.docHtml = '';
@@ -80,12 +91,15 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
             }
             if (!this.url) {
                 this.fullUrl = null;
-            } else if (this.configuredViewer === 'office' || this.configuredViewer === 'google') {
+            } else if (this.configuredViewer === 'office' || this.configuredViewer === 'google'
+                || this.configuredViewer === 'pdf') {
                 const u = this.url.indexOf('/') ? encodeURIComponent(this.url) : this.url;
                 this.fullUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
                     this.configuredViewer === 'google' ?
                         `https://docs.google.com/gview?url=${u}&embedded=true` :
-                        `https://view.officeapps.live.com/op/embed.aspx?src=${u}`);
+                        this.configuredViewer === 'office' ?
+                        `https://view.officeapps.live.com/op/embed.aspx?src=${u}` :
+                        this.url);
                 // see:
                 // https://stackoverflow.com/questions/40414039/google-docs-viewer-returning-204-responses-no-longer-working-alternatives
                 // hack to reload iframe if it's not loaded.
@@ -108,6 +122,9 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
                     });
                 }
             } else if (this.configuredViewer === 'mammoth') {
+                if (!mammoth) {
+                    console.error('Please install mammoth and make sure mammoth.browser.min.js is loaded.');
+                }
                 this.docHtml = await this.getDocxToHtml(this.url);
             }
         }

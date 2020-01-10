@@ -32,7 +32,6 @@
         "url": "https://github.com/Marcelh1983/angular-document-viewer/issues"
     },
     "homepage": "https://github.com/Marcelh1983/angular-document-viewer",
-    "dependencies": {},
     "devDependencies": {
         "@angular-devkit/build-angular": "~0.900.0-rc.7",
         "@angular/animations": "~9.0.0-rc.7",
@@ -50,6 +49,7 @@
         "codelyzer": "~5.2.1",
         "bootstrap": "4.4.1",
         "mammoth": "1.4.9",
+        "pdfjs-dist": "2.2.228",
         "ng-packagr": "^5.7.1",
         "rxjs": "^6.5.4",
         "tslint": "^5.20.1",
