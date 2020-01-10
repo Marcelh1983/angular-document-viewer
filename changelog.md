@@ -1,3 +1,7 @@
+# 1.0.0 (01/10/2019)
+* added support for objectUrls docx and pdf files (docx using mammoth see readme, pdf using embedded viewer)
+* added option to add an overlay to disable/hide office popout button and menu.
+ 
 # 0.1.27 (01/08/2019)
 * added option to add an overlay to disable/hide googles popout button, and/or selecting text.
 
