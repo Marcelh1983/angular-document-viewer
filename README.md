@@ -4,7 +4,7 @@
 
 This component can be used to show several different document types in an Angular app.
 
-Documents that are publicly available can be shown in an iframe using the google of office document viewer.
+Documents that are publicly available can be shown in an iframe using the google or office document viewer.
 
 Pdf files and word document that are not publicly available can be shown using the mammoth viewer or pdf viewer by passing an objectUrl.
 
