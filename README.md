@@ -17,18 +17,6 @@ Pdf files and word document that are not publicly available can be shown using t
 npm install ngx-doc-viewer --save
 ```
 
-To use mammoth, also add: 
-```sh
-npm install mammoth --save
-```
-and make sure mammoth.browser.min.js is loaded. For the angular/cli you would add the following in angular.json:
-
-```json
-    "scripts": [
-        "node_modules/mammoth/mammoth.browser.min.js"
-    ]
-```
-
 ### Usage
 
 #### 1. Import `NgxDocViewerModule` 
@@ -69,14 +57,6 @@ Output:
 
 ### File type support
 
-### pdf
-
-.pdf
-
-### mammoth
-
-.docx
-
 #### office viewer
 .ppt, .pptx, .doc, .docx, .xls and .xlsx
 
@@ -104,4 +84,26 @@ Google Drive viewer helps you preview over 15 different file types, listed below
 * Archive file types (.ZIP and .RAR)
 
 <a href="https://gist.githubusercontent.com/tzmartin/1cf85dc3d975f94cfddc04bc0dd399be/raw/d4263c8faf7b68f4bbfd33b386ec33ed2bc11e7d/embedded-file-viewer.md">Source</a>
+
+### pdf
+
+.pdf
+
+NOTE: PDF's are shown in the embed tag. Browser support is not guaranteed. If you need to be sure the pdf renders on all browsers you better use PDF.js
+
+### mammoth
+
+.docx
+
+To use mammoth, also add: 
+```sh
+npm install mammoth --save
+```
+and make sure mammoth.browser.min.js is loaded. For the angular/cli you would add the following in angular.json:
+
+```json
+    "scripts": [
+        "node_modules/mammoth/mammoth.browser.min.js"
+    ]
+```
 
