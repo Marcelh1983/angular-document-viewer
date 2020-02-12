@@ -18,6 +18,7 @@
     "component-selector": [
       true,
       "element",
+      "demo/app",
       "kebab-case"
     ],
     "import-blacklist": [
