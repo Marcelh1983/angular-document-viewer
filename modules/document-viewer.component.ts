@@ -61,17 +61,7 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
     @Input() googleCheckInterval = 3000;
     @Input() disableContent: 'none' | 'all' |  'popout' | 'popout-hide' = 'none';
     @Input() googleCheckContentLoaded = true;
-    @Input() set viewer(viewer: viewerType) {
-        if (viewer !== 'google' && viewer !== 'office' && viewer !== 'mammoth' && viewer !== 'pdf') {
-            console.error(`Unsupported viewer: '${viewer}'. Supported viewers: google, office, mammoth and pdf`);
-        }
-        if (viewer === 'mammoth') {
-            if (mammoth === null) {
-                console.error('please install mammoth when using local viewer');
-            }
-        }
-        this.configuredViewer = viewer;
-    }
+    @Input() viewer: viewerType;
     ngOnDestroy(): void {
         if (this.checkIFrameSubscription) {
             this.checkIFrameSubscription.unsubscribe();
@@ -79,6 +69,17 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
     }
 
     async ngOnChanges(changes: SimpleChanges): Promise<void> {
+        if (changes && (changes.viewer.isFirstChange || changes.viewer.currentValue !== changes.viewer.previousValue)) {
+            if (this.viewer !== 'google' && this.viewer !== 'office' && this.viewer !== 'mammoth' && this.viewer !== 'pdf') {
+                console.error(`Unsupported viewer: '${this.viewer}'. Supported viewers: google, office, mammoth and pdf`);
+            }
+            if (this.viewer === 'mammoth') {
+                if (mammoth === null) {
+                    console.error('please install mammoth when using local viewer');
+                }
+            }
+            this.configuredViewer = this.viewer;
+        }
         if (this.disableContent !== 'none' && this.viewer !== 'google') {
 
         }
