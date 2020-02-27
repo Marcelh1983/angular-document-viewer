@@ -69,7 +69,7 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
     }
 
     async ngOnChanges(changes: SimpleChanges): Promise<void> {
-        if (changes && (changes.viewer.isFirstChange || changes.viewer.currentValue !== changes.viewer.previousValue)) {
+        if (changes && changes.viewer && (changes.viewer.isFirstChange || changes.viewer.currentValue !== changes.viewer.previousValue)) {
             if (this.viewer !== 'google' && this.viewer !== 'office' && this.viewer !== 'mammoth' && this.viewer !== 'pdf') {
                 console.error(`Unsupported viewer: '${this.viewer}'. Supported viewers: google, office, mammoth and pdf`);
             }
