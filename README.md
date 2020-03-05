@@ -41,6 +41,7 @@ To
 Input: 
 - url: document url.
 - viewer: google (default), office, mammoth or pdf
+- queryParams, e.g. to set language. for google: hl=[lang] e.g. hl=nl
 - disableContent: 'none' | 'all' | 'popout' | 'popout-hide' = 'none': 
     - none: no overlay
     - all: adds an overlay to the whole iframe, which makes nothing in the document clickable/selectable

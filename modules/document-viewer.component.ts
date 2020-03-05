@@ -58,6 +58,7 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
     constructor(private domSanitizer: DomSanitizer, private ngZone: NgZone) { }
     @Output() loaded: EventEmitter<any> = new EventEmitter();
     @Input() url = '';
+    @Input() queryParams = '';
     @Input() googleCheckInterval = 3000;
     @Input() disableContent: 'none' | 'all' |  'popout' | 'popout-hide' = 'none';
     @Input() googleCheckContentLoaded = true;
@@ -95,12 +96,17 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
             } else if (this.configuredViewer === 'office' || this.configuredViewer === 'google'
                 || this.configuredViewer === 'pdf') {
                 const u = this.url.indexOf('/') ? encodeURIComponent(this.url) : this.url;
-                this.fullUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
+                let url =
                     this.configuredViewer === 'google' ?
                         `https://docs.google.com/gview?url=${u}&embedded=true` :
                         this.configuredViewer === 'office' ?
                         `https://view.officeapps.live.com/op/embed.aspx?src=${u}` :
-                        this.url);
+                        this.url;
+                if (this.queryParams) {
+                    const start = this.queryParams.startsWith('&') ? '' : '&';
+                    url = `${url}${start}${this.queryParams}`;
+                }
+                this.fullUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(url);
                 // see:
                 // https://stackoverflow.com/questions/40414039/google-docs-viewer-returning-204-responses-no-longer-working-alternatives
                 // hack to reload iframe if it's not loaded.

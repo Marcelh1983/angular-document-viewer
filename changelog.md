@@ -1,3 +1,6 @@
+# 1.0.4 (05/03/2020)
+* added option to pass queryParams, e.g. to set language. for google: hl=[lang] e.g. hl=nl
+
 # 1.0.1 (02/12/2019)
 * updated packages
 
