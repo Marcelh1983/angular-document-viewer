@@ -149,7 +149,6 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
 
     reloadIFrame(iframe: HTMLIFrameElement) {
         if (iframe) {
-            console.log('reloading..');
             iframe.src = iframe.src;
         }
     }
