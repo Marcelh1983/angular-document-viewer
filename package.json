@@ -1,63 +1,66 @@
 {
-    "name": "ngx-doc-viewer",
-    "version": "1.0.4",
-    "description": "Angular document viewer.",
-    "main": "./package/index.js",
-    "ngPackage": {
-        "dest": "package",
-        "lib": {
-            "entryFile": "modules/index.ts"
-        },
-        "whitelistedNonPeerDependencies": [
-            "."
-        ]
+  "name": "@eitmn/angular-document-viewer",
+  "version": "1.0.4",
+  "description": "Angular document viewer.",
+  "main": "./package/index.js",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "ngPackage": {
+    "dest": "package",
+    "lib": {
+      "entryFile": "modules/index.ts"
     },
-    "scripts": {
-        "build": "ng-packagr -p package.json",
-        "publish": "ng-packagr -p package.json && npm publish ./package --tag latest",
-        "publish-next": "ng-packagr -p package.json && npm publish ./package --tag next",
-        "start": "ng serve --port 4201"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Marcelh1983/angular-document-viewer.git"
-    },
-    "keywords": [
-        "Angular",
-        "Word"
-    ],
-    "author": "Marcel Hoekstra",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/Marcelh1983/angular-document-viewer/issues"
-    },
-    "homepage": "https://github.com/Marcelh1983/angular-document-viewer",
-    "devDependencies": {
-        "@angular-devkit/build-angular": "~0.900.6",
-        "@angular/animations": "~9.0.6",
-        "@angular/cli": "~9.0.6",
-        "@angular/common": "~9.0.6",
-        "@angular/compiler": "~9.0.6",
-        "@angular/compiler-cli": "~9.0.6",
-        "@angular/core": "~9.0.6",
-        "@angular/forms": "~9.0.6",
-        "@angular/language-service": "~9.0.6",
-        "@angular/platform-browser": "~9.0.6",
-        "@angular/platform-browser-dynamic": "~9.0.6",
-        "@angular/router": "~9.0.6",
-        "@types/node": "~13.9.1",
-        "codelyzer": "~5.2.1",
-        "bootstrap": "4.4.1",
-        "mammoth": "1.4.9",
-        "ng-packagr": "^9.0.3",
-        "rxjs": "^6.5.4",
-        "tslint": "^5.20.1",
-        "typescript": "3.7.5",
-        "zone.js": "^0.10.2"
-    },
-    "peerDependencies": {
-        "@angular/common": ">= 6.0.0",
-        "@angular/core": ">= 6.0.0",
-        "rxjs": ">= 6.3.0"
-    }
+    "whitelistedNonPeerDependencies": [
+      "."
+    ]
+  },
+  "scripts": {
+    "build": "ng-packagr -p package.json",
+    "publish": "ng-packagr -p package.json && npm publish ./package --tag latest",
+    "publish-next": "ng-packagr -p package.json && npm publish ./package --tag next",
+    "start": "ng serve --port 4201"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eitmn/angular-document-viewer.git"
+  },
+  "keywords": [
+    "Angular",
+    "Word"
+  ],
+  "author": "Marcel Hoekstra",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eitmn/angular-document-viewer/issues"
+  },
+  "homepage": "https://github.com/eitmn/angular-document-viewer",
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~0.900.6",
+    "@angular/animations": "~9.0.6",
+    "@angular/cli": "~9.0.6",
+    "@angular/common": "~9.0.6",
+    "@angular/compiler": "~9.0.6",
+    "@angular/compiler-cli": "~9.0.6",
+    "@angular/core": "~9.0.6",
+    "@angular/forms": "~9.0.6",
+    "@angular/language-service": "~9.0.6",
+    "@angular/platform-browser": "~9.0.6",
+    "@angular/platform-browser-dynamic": "~9.0.6",
+    "@angular/router": "~9.0.6",
+    "@types/node": "~13.9.1",
+    "codelyzer": "~5.2.1",
+    "bootstrap": "4.4.1",
+    "mammoth": "1.4.9",
+    "ng-packagr": "^9.0.3",
+    "rxjs": "^6.5.4",
+    "tslint": "^5.20.1",
+    "typescript": "3.7.5",
+    "zone.js": "^0.10.2"
+  },
+  "peerDependencies": {
+    "@angular/common": ">= 6.0.0",
+    "@angular/core": ">= 6.0.0",
+    "rxjs": ">= 6.3.0"
+  }
 }
