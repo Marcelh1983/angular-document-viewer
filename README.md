@@ -40,7 +40,9 @@ To
 
 Input: 
 - url: document url.
-- viewer: google (default), office, mammoth or pdf
+- viewer: google (default), office, mammoth, pdf or url
+- viewerUrl: only for viewer: url; location of the document renderer. 
+    Url location should added by %URL% e.g for google drive: https://drive.google.com/viewerng/viewer?url=%URL%&embedded=true&hl=en
 - queryParams, e.g. to set language. for google: hl=[lang] e.g. hl=nl
 - disableContent: 'none' | 'all' | 'popout' | 'popout-hide' = 'none': 
     - none: no overlay
@@ -86,6 +88,18 @@ Google Drive viewer helps you preview over 15 different file types, listed below
 
 <a href="https://gist.githubusercontent.com/tzmartin/1cf85dc3d975f94cfddc04bc0dd399be/raw/d4263c8faf7b68f4bbfd33b386ec33ed2bc11e7d/embedded-file-viewer.md">Source</a>
 
+#### url
+
+For another external document viewers that should be loaded in an iframe.
+For Google Drive this would be:
+
+```html
+    <ngx-doc-viewer [viewerUrl]="https://drive.google.com/viewerng/viewer?url=%URL%&embedded=true&hl=en"
+        [url]="http://docs.google.com/fileview?id=0B5ImRpiNhCfGZDVhMGEyYmUtZTdmMy00YWEyLWEyMTQtN2E2YzM3MDg3MTZh"
+        viewer="google" style="width:100%;height:50vh;">
+    </ngx-doc-viewer>
+```
+
 ### pdf
 
 .pdf
@@ -107,4 +121,3 @@ and make sure mammoth.browser.min.js is loaded. For the angular/cli you would ad
         "node_modules/mammoth/mammoth.browser.min.js"
     ]
 ```
-

@@ -6,7 +6,7 @@ import { EventEmitter } from '@angular/core';
 
 declare var mammoth;
 
-export type viewerType = 'google' | 'office' | 'mammoth' | 'pdf';
+export type viewerType = 'google' | 'office' | 'mammoth' | 'pdf' | 'url';
 @Component({
     selector: 'ngx-doc-viewer',
     templateUrl: 'document-viewer.component.html',
@@ -59,8 +59,9 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
     @Output() loaded: EventEmitter<any> = new EventEmitter();
     @Input() url = '';
     @Input() queryParams = '';
+    @Input() viewerUrl = '';
     @Input() googleCheckInterval = 3000;
-    @Input() disableContent: 'none' | 'all' |  'popout' | 'popout-hide' = 'none';
+    @Input() disableContent: 'none' | 'all' | 'popout' | 'popout-hide' = 'none';
     @Input() googleCheckContentLoaded = true;
     @Input() viewer: viewerType;
     ngOnDestroy(): void {
@@ -71,7 +72,8 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
 
     async ngOnChanges(changes: SimpleChanges): Promise<void> {
         if (changes && changes.viewer && (changes.viewer.isFirstChange || changes.viewer.currentValue !== changes.viewer.previousValue)) {
-            if (this.viewer !== 'google' && this.viewer !== 'office' && this.viewer !== 'mammoth' && this.viewer !== 'pdf') {
+            if (this.viewer !== 'google' && this.viewer !== 'office' &&
+                this.viewer !== 'mammoth' && this.viewer !== 'pdf' && this.viewer !== 'url') {
                 console.error(`Unsupported viewer: '${this.viewer}'. Supported viewers: google, office, mammoth and pdf`);
             }
             if (this.viewer === 'mammoth') {
@@ -85,23 +87,32 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
 
         }
         if ((changes.url && changes.url.currentValue !== changes.url.previousValue) ||
-            changes.viewer && changes.viewer.currentValue !== changes.viewer.previousValue) {
+            changes.viewer && changes.viewer.currentValue !== changes.viewer.previousValue ||
+            changes.viewerUrl && changes.viewerUrl.currentValue !== changes.viewerUrl.previousValue) {
+            switch (this.configuredViewer) {
+                case 'google':
+                    this.viewerUrl = `https://docs.google.com/gview?url=%URL%&embedded=true`;
+                    break;
+                case 'office': {
+                    this.viewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=%URL%`;
+                    break;
+                }
+                case 'pdf': {
+                    this.viewerUrl = null;
+                    break;
+                }
+            }
             this.docHtml = '';
-            this.externalViewer = this.configuredViewer === 'google' || this.configuredViewer === 'office';
+            this.externalViewer = this.configuredViewer === 'google' || this.configuredViewer === 'office' || this.configuredViewer === 'url';
             if (this.checkIFrameSubscription) {
                 this.checkIFrameSubscription.unsubscribe();
             }
             if (!this.url) {
                 this.fullUrl = null;
             } else if (this.configuredViewer === 'office' || this.configuredViewer === 'google'
-                || this.configuredViewer === 'pdf') {
+                || this.configuredViewer === 'pdf' || this.configuredViewer === 'url') {
                 const u = this.url.indexOf('/') ? encodeURIComponent(this.url) : this.url;
-                let url =
-                    this.configuredViewer === 'google' ?
-                        `https://docs.google.com/gview?url=${u}&embedded=true` :
-                        this.configuredViewer === 'office' ?
-                        `https://view.officeapps.live.com/op/embed.aspx?src=${u}` :
-                        this.url;
+                let url = this.viewerUrl ? this.viewerUrl.replace('%URL%', u) : this.url;
                 if (this.queryParams) {
                     const start = this.queryParams.startsWith('&') ? '' : '&';
                     url = `${url}${start}${this.queryParams}`;

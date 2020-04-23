@@ -7,7 +7,7 @@ import { viewerType } from 'modules/document-viewer.component';
   styles: []
 })
 export class AppComponent {
-  viewers: { name: viewerType, docs: string[], custom: boolean, acceptedUploadTypes: string }[] = [
+  viewers: { name: viewerType, docs: string[], custom: boolean, acceptedUploadTypes: string, viewerUrl?: string }[] = [
     {
       name: 'google', docs: [
         'https://file-examples.com/wp-content/uploads/2017/02/file-sample_100kB.docx',
@@ -34,7 +34,13 @@ export class AppComponent {
     {
       name: 'pdf', docs: [
         `${window.location.href}/assets/file-sample_150kB.pdf`
-      ], custom: false,  acceptedUploadTypes: 'application/pdf'
+      ], custom: false, acceptedUploadTypes: 'application/pdf'
+    },
+    {
+      name: 'url', docs: [
+        `http://docs.google.com/fileview?id=0B5ImRpiNhCfGZDVhMGEyYmUtZTdmMy00YWEyLWEyMTQtN2E2YzM3MDg3MTZh`
+      ], custom: false, acceptedUploadTypes: null,
+      viewerUrl: 'https://drive.google.com/viewerng/viewer?url=%URL%&embedded=true&hl=en'
     }
   ];
   selectedViewer = this.viewers[0];
