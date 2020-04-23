@@ -41,8 +41,7 @@ To
 Input: 
 - url: document url.
 - viewer: google (default), office, mammoth, pdf or url
-- viewerUrl: only for viewer: url; location of the document renderer. 
-    Url location should added by %URL% e.g for google drive: https://drive.google.com/viewerng/viewer?url=%URL%&embedded=true&hl=en
+- viewerUrl: only for viewer: 'url'; location of the document renderer. Only use this option for other viewers then google or office.
 - queryParams, e.g. to set language. for google: hl=[lang] e.g. hl=nl
 - disableContent: 'none' | 'all' | 'popout' | 'popout-hide' = 'none': 
     - none: no overlay
@@ -91,12 +90,23 @@ Google Drive viewer helps you preview over 15 different file types, listed below
 #### url
 
 For another external document viewers that should be loaded in an iframe.
-For Google Drive this would be:
+
+For Google Drive
 
 ```html
-    <ngx-doc-viewer [viewerUrl]="https://drive.google.com/viewerng/viewer?url=%URL%&embedded=true&hl=en"
+    <ngx-doc-viewer
         [url]="http://docs.google.com/fileview?id=0B5ImRpiNhCfGZDVhMGEyYmUtZTdmMy00YWEyLWEyMTQtN2E2YzM3MDg3MTZh"
-        viewer="google" style="width:100%;height:50vh;">
+        viewer="url" style="width:100%;height:50vh;">
+    </ngx-doc-viewer>
+```
+
+For the Google Viewer or any other viewer where there is a base url and a parameter for the documentUrl:
+
+```html
+    <ngx-doc-viewer 
+        [viewerUrl]="https://docs.google.com/gview?url=%URL%&embedded=true"
+        [url]="http://docs.google.com/fileview?id=0B5ImRpiNhCfGZDVhMGEyYmUtZTdmMy00YWEyLWEyMTQtN2E2YzM3MDg3MTZh"
+        viewer="url" style="width:100%;height:50vh;">
     </ngx-doc-viewer>
 ```
 

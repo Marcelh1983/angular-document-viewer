@@ -38,9 +38,8 @@ export class AppComponent {
     },
     {
       name: 'url', docs: [
-        `http://docs.google.com/fileview?id=0B5ImRpiNhCfGZDVhMGEyYmUtZTdmMy00YWEyLWEyMTQtN2E2YzM3MDg3MTZh`
-      ], custom: false, acceptedUploadTypes: null,
-      viewerUrl: 'https://drive.google.com/viewerng/viewer?url=%URL%&embedded=true&hl=en'
+        `https://docs.google.com/document/d/e/2PACX-1vRs3gemrszDinuGJCi_wO2m5XVP1q2SlRhxM8PAUYc3wu9LFsvteny7l6Rkp695-ruhfn3gWXV03yXC/pub?embedded=true`
+      ], custom: false, acceptedUploadTypes: null
     }
   ];
   selectedViewer = this.viewers[0];
