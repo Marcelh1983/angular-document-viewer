@@ -105,7 +105,7 @@ For the Google Viewer or any other viewer where there is a base url and a parame
 ```html
     <ngx-doc-viewer 
         [viewerUrl]="https://docs.google.com/gview?url=%URL%&embedded=true"
-        [url]="http://docs.google.com/fileview?id=0B5ImRpiNhCfGZDVhMGEyYmUtZTdmMy00YWEyLWEyMTQtN2E2YzM3MDg3MTZh"
+        [url]="https://file-examples.com/wp-content/uploads/2017/02/file-sample_100kB.doc"
         viewer="url" style="width:100%;height:50vh;">
     </ngx-doc-viewer>
 ```
