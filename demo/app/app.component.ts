@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { viewerType } from 'modules/document-viewer.component';
+import { getbaseUrl } from 'demo/utils';
 
 @Component({
   selector: 'app-root',
@@ -14,26 +15,26 @@ export class AppComponent {
         'https://file-examples.com/wp-content/uploads/2017/02/file_example_XLSX_10.xlsx',
         'https://file-examples.com/wp-content/uploads/2017/10/file_example_TIFF_1MB.tiff',
         'https://file-examples.com/wp-content/uploads/2017/10/file-sample_150kB.pdf',
-        'https://file-examples.com/wp-content/uploads/2017/08/file_example_PPT_250kB.ppt'
+        `${getbaseUrl()}/assets/file_example_PPT_250kB.ppt`,
+        `${getbaseUrl()}/assets/file_example_PPTX_250kB.pptx`,
       ], custom: true, acceptedUploadTypes: null
     },
     {
       name: 'office', docs: [
         'https://file-examples.com/wp-content/uploads/2017/02/file-sample_100kB.docx',
         'https://file-examples.com/wp-content/uploads/2017/02/file_example_XLSX_10.xlsx',
-        'https://file-examples.com/wp-content/uploads/2017/10/file_example_TIFF_1MB.tiff',
-        'https://file-examples.com/wp-content/uploads/2017/10/file-sample_150kB.pdf',
-        'https://file-examples.com/wp-content/uploads/2017/08/file_example_PPT_250kB.ppt'
+        `${getbaseUrl()}/assets/file_example_PPT_250kB.ppt`,
+        `${getbaseUrl()}/assets/file_example_PPTX_250kB`,
       ], custom: true, acceptedUploadTypes: null
     },
     {
       name: 'mammoth', docs: [
-        `${window.location.href}/assets/file-sample_100kB.docx`
+        `${getbaseUrl()}/assets/file-sample_100kB.docx`
       ], custom: false, acceptedUploadTypes: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
     },
     {
       name: 'pdf', docs: [
-        `${window.location.href}/assets/file-sample_150kB.pdf`
+        `${getbaseUrl()}/assets/file-sample_150kB.pdf`
       ], custom: false, acceptedUploadTypes: 'application/pdf'
     },
     {
@@ -68,4 +69,5 @@ export class AppComponent {
       reader.readAsDataURL(fileInput.target.files[0]);
     }
   }
+
 }
