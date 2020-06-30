@@ -8,6 +8,7 @@ declare var mammoth;
 
 export type viewerType = 'google' | 'office' | 'mammoth' | 'pdf' | 'url';
 @Component({
+    // tslint:disable-next-line: component-selector
     selector: 'ngx-doc-viewer',
     templateUrl: 'document-viewer.component.html',
     styles: [`:host {
