@@ -1,3 +1,6 @@
+# 1.2.0 (06/30/2020)
+* upgraded to Angular 10
+
 # 1.0.5 (04/23/2020)
 * added 'url' viewer to support exteral viewers other then google and office
 
