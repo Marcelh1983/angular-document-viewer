@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Demo</title>
@@ -8,7 +9,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
+
 <body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyB0hOFFK4FvvVF6a0zAcjZP7nNftfCiCTQ",
+      authDomain: "angular-doc-viewer.firebaseapp.com",
+      databaseURL: "https://angular-doc-viewer.firebaseio.com",
+      projectId: "angular-doc-viewer",
+      storageBucket: "angular-doc-viewer.appspot.com",
+      messagingSenderId: "902089077961",
+      appId: "1:902089077961:web:012f06c5caf610d9ee4918"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
   <app-root></app-root>
 </body>
+
 </html>
