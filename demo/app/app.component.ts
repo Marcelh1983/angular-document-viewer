@@ -11,18 +11,18 @@ export class AppComponent {
   viewers: { name: viewerType, docs: string[], custom: boolean, acceptedUploadTypes: string, viewerUrl?: string }[] = [
     {
       name: 'google', docs: [
-        'https://file-examples.com/wp-content/uploads/2017/02/file-sample_100kB.docx',
-        'https://file-examples.com/wp-content/uploads/2017/02/file_example_XLSX_10.xlsx',
-        'https://file-examples.com/wp-content/uploads/2017/10/file_example_TIFF_1MB.tiff',
-        'https://file-examples.com/wp-content/uploads/2017/10/file-sample_150kB.pdf',
+        'https://file-examples-com.github.io/uploads/2017/02/file-sample_100kB.docx',
+        'https://file-examples-com.github.io/uploads/2017/02/file_example_XLSX_50.xlsx',
+        'https://file-examples-com.github.io/uploads/2017/10/file_example_TIFF_1MB.tiff',
+        'https://file-examples-com.github.io/uploads/2017/10/file-example_PDF_500_kB.pdf',
         `${getbaseUrl()}/assets/file_example_PPT_250kB.ppt`,
         `${getbaseUrl()}/assets/file_example_PPTX_250kB.pptx`,
       ], custom: true, acceptedUploadTypes: null
     },
     {
       name: 'office', docs: [
-        'https://file-examples.com/wp-content/uploads/2017/02/file-sample_100kB.docx',
-        'https://file-examples.com/wp-content/uploads/2017/02/file_example_XLSX_10.xlsx',
+        'https://file-examples-com.github.io/uploads/2017/02/file-sample_100kB.docx',
+        'https://file-examples-com.github.io/uploads/2017/02/file_example_XLSX_50.xlsx',
         `${getbaseUrl()}/assets/file_example_PPT_250kB.ppt`,
         `${getbaseUrl()}/assets/file_example_PPTX_250kB`,
       ], custom: true, acceptedUploadTypes: null

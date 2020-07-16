@@ -1,3 +1,7 @@
+# 1.2.1 (07/16/2020)
+* upgraded packages
+* updated broken links in demo project
+
 # 1.2.0 (06/30/2020)
 * upgraded to Angular 10
 
