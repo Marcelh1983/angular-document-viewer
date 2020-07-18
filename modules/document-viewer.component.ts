@@ -127,7 +127,7 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
                 // hack to reload iframe if it's not loaded.
                 // would maybe be better to use view.officeapps.live.com but seems not to work with sas token.
                 if (this.configuredViewer === 'google' && this.googleCheckContentLoaded) {
-                  console.log(this.this.configuredViewer, this.googleCheckContentLoaded);
+                  console.log(this.configuredViewer, this.googleCheckContentLoaded);
                   console.log('great');
                     this.ngZone.runOutsideAngular(() => {
                         let iframe = document.querySelector('iframe');
