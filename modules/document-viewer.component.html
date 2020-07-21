@@ -13,7 +13,7 @@
 <ng-container *ngIf="externalViewer">
     <iframe
         *ngIf="fullUrl && disableContent === 'none'"
-        id="iframe"
+        id="doc-iframe"
         frameBorder="0"
         [src]="fullUrl"
     ></iframe>
@@ -30,7 +30,7 @@
         </div>
         <iframe
             *ngIf="fullUrl"
-            id="iframe"
+            id="doc-iframe"
             frameBorder="0"
             [src]="fullUrl"
         ></iframe>

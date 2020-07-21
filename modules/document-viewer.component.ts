@@ -127,10 +127,8 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
                 // hack to reload iframe if it's not loaded.
                 // would maybe be better to use view.officeapps.live.com but seems not to work with sas token.
                 if (this.configuredViewer === 'google' && this.googleCheckContentLoaded) {
-                  console.log(this.configuredViewer, this.googleCheckContentLoaded);
-                  console.log('great');
                     this.ngZone.runOutsideAngular(() => {
-                        let iframe = document.querySelector('iframe');
+                        let iframe = this.findDocumentViewerIframe();
                         this.checkIFrame(iframe);
                         // if it's not loaded after the googleIntervalCheck, then open load again.
                         this.checkIFrameSubscription = interval(this.googleCheckInterval)
@@ -138,7 +136,7 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
                                 take(Math.round(this.googleCheckInterval === 0 ? 0 : 20000 / this.googleCheckInterval)))
                             .subscribe(() => {
                                 if (iframe == null) {
-                                    iframe = document.querySelector('iframe');
+                                    iframe = this.findDocumentViewerIframe();
                                     this.checkIFrame(iframe);
                                 }
                                 this.reloadIFrame(iframe);
@@ -153,6 +151,19 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
             }
         }
     }
+
+    findDocumentViewerIframe(): HTMLIFrameElement {
+        let docViewerIframe;
+        document.querySelectorAll('iframe').forEach(
+            iframeItem => {
+                if (iframeItem && iframeItem.id == 'doc-iframe') {
+                    docViewerIframe = iframeItem;
+                }
+            }
+        );
+        return docViewerIframe;
+    }
+
     checkIFrame(iframe: HTMLIFrameElement) {
         if (iframe) {
             iframe.onload = () => {
