@@ -13,6 +13,7 @@
 <ng-container *ngIf="externalViewer">
     <iframe
         *ngIf="fullUrl && disableContent === 'none'"
+        #iframe
         id="iframe"
         frameBorder="0"
         [src]="fullUrl"
