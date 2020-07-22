@@ -1,3 +1,6 @@
+# 1.2.3 (07/22/2020)
+* merge fix by @itsLucario for accessing iframe by QueryList (ElementRef instead of HTMLIFrameelement)
+
 # 1.2.2 (07/21/2020)
 * support for multiple iframes
 
