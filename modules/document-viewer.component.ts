@@ -153,18 +153,6 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    findDocumentViewerIframe(): HTMLIFrameElement {
-        let docViewerIframe;
-        document.querySelectorAll('iframe').forEach(
-            iframeItem => {
-                if (iframeItem && iframeItem.id == 'doc-iframe') {
-                    docViewerIframe = iframeItem;
-                }
-            }
-        );
-        return docViewerIframe;
-    }
-
     checkIFrame(iframe: HTMLIFrameElement) {
         if (iframe) {
             iframe.onload = () => {
