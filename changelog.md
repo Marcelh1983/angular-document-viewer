@@ -1,3 +1,6 @@
+# 1.2.2 (07/21/2020)
+* support for multiple iframes
+
 # 1.2.1 (07/16/2020)
 * upgraded packages
 * updated broken links in demo project

@@ -1,4 +1,4 @@
-import { Component, Input, NgZone, OnDestroy, OnChanges, SimpleChanges, Output } from '@angular/core';
+import { Component, Input, NgZone, OnDestroy, OnChanges, SimpleChanges, Output, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { take } from 'rxjs/operators';
 import { Subscription, interval } from 'rxjs';
@@ -65,6 +65,7 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
     @Input() disableContent: 'none' | 'all' | 'popout' | 'popout-hide' = 'none';
     @Input() googleCheckContentLoaded = true;
     @Input() viewer: viewerType;
+    @ViewChildren('iframe') iframes: QueryList<ElementRef>;
     ngOnDestroy(): void {
         if (this.checkIFrameSubscription) {
             this.checkIFrameSubscription.unsubscribe();
@@ -128,7 +129,7 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
                 // would maybe be better to use view.officeapps.live.com but seems not to work with sas token.
                 if (this.configuredViewer === 'google' && this.googleCheckContentLoaded) {
                     this.ngZone.runOutsideAngular(() => {
-                        let iframe = this.findDocumentViewerIframe();
+                        let iframe = this.iframes?.first.nativeElement;
                         this.checkIFrame(iframe);
                         // if it's not loaded after the googleIntervalCheck, then open load again.
                         this.checkIFrameSubscription = interval(this.googleCheckInterval)
@@ -136,7 +137,7 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
                                 take(Math.round(this.googleCheckInterval === 0 ? 0 : 20000 / this.googleCheckInterval)))
                             .subscribe(() => {
                                 if (iframe == null) {
-                                    iframe = this.findDocumentViewerIframe();
+                                    iframe = this.iframes?.first.nativeElement;
                                     this.checkIFrame(iframe);
                                 }
                                 this.reloadIFrame(iframe);
