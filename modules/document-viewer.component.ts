@@ -118,7 +118,7 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
                 || this.configuredViewer === 'pdf' || this.configuredViewer === 'url') {
                 const u = this.url.indexOf('/') ? encodeURIComponent(this.url) : this.url;
                 let url = this.viewerUrl ? this.viewerUrl.replace('%URL%', u) : this.url;
-                if (this.queryParams) {
+                if (!!this.queryParams && this.configuredViewer !== 'pdf') {
                     const start = this.queryParams.startsWith('&') ? '' : '&';
                     url = `${url}${start}${this.queryParams}`;
                 }
@@ -129,7 +129,7 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
                 // would maybe be better to use view.officeapps.live.com but seems not to work with sas token.
                 if (this.configuredViewer === 'google' && this.googleCheckContentLoaded) {
                     this.ngZone.runOutsideAngular(() => {
-                        let iframe = this.iframes?.first.nativeElement;
+                        let iframe = this.iframes?.first?.nativeElement;
                         this.checkIFrame(iframe);
                         // if it's not loaded after the googleIntervalCheck, then open load again.
                         this.checkIFrameSubscription = interval(this.googleCheckInterval)
@@ -137,7 +137,7 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
                                 take(Math.round(this.googleCheckInterval === 0 ? 0 : 20000 / this.googleCheckInterval)))
                             .subscribe(() => {
                                 if (iframe == null) {
-                                    iframe = this.iframes?.first.nativeElement;
+                                    iframe = this.iframes?.first?.nativeElement;
                                     this.checkIFrame(iframe);
                                 }
                                 this.reloadIFrame(iframe);
