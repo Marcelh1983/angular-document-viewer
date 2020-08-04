@@ -1,3 +1,8 @@
+# 1.3.0 (08/05/2020)
+* better way to check if iframe is loaded. Fix for unnecessary reload
+* object tag instead of embed thanks to @mediantiba
+* upgraded dependencies
+
 # 1.2.3 (07/22/2020)
 * merge fix by @itsLucario for accessing iframe by QueryList (ElementRef instead of HTMLIFrameelement)
 
