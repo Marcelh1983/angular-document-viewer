@@ -1,7 +1,7 @@
 import { Component, Input, NgZone, OnDestroy, OnChanges, SimpleChanges, Output, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { take } from 'rxjs/operators';
-import { Subscription, interval } from 'rxjs';
+import { Subscription, interval, timer } from 'rxjs';
 import { EventEmitter } from '@angular/core';
 
 declare var mammoth;
@@ -129,17 +129,12 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
                 // would maybe be better to use view.officeapps.live.com but seems not to work with sas token.
                 if (this.configuredViewer === 'google' && this.googleCheckContentLoaded) {
                     this.ngZone.runOutsideAngular(() => {
-                        let iframe = this.iframes?.first?.nativeElement;
-                        this.checkIFrame(iframe);
                         // if it's not loaded after the googleIntervalCheck, then open load again.
-                        this.checkIFrameSubscription = interval(this.googleCheckInterval)
+                        this.checkIFrameSubscription = timer(100, this.googleCheckInterval)
                             .pipe(
                                 take(Math.round(this.googleCheckInterval === 0 ? 0 : 20000 / this.googleCheckInterval)))
                             .subscribe(() => {
-                                if (iframe == null) {
-                                    iframe = this.iframes?.first?.nativeElement;
-                                    this.checkIFrame(iframe);
-                                }
+                                const iframe = this.iframes?.first?.nativeElement;
                                 this.reloadIFrame(iframe);
                             });
                     });
@@ -153,14 +148,10 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    checkIFrame(iframe: HTMLIFrameElement) {
-        if (iframe) {
-            iframe.onload = () => {
-                this.loaded.emit(null);
-                if (this.checkIFrameSubscription) {
-                    this.checkIFrameSubscription.unsubscribe();
-                }
-            };
+    iframeLoaded() {
+        this.loaded.emit(null);
+        if (this.checkIFrameSubscription) {
+            this.checkIFrameSubscription.unsubscribe();
         }
     }
 

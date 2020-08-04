@@ -7,13 +7,13 @@
     </object>
 </ng-container>
 <ng-container *ngIf="externalViewer">
-    <iframe *ngIf="fullUrl && disableContent === 'none'" #iframe id="iframe" frameBorder="0" [src]="fullUrl"></iframe>
+    <iframe (load)="iframeLoaded()" *ngIf="fullUrl && disableContent === 'none'" #iframe id="iframe" frameBorder="0" [src]="fullUrl"></iframe>
     <div class="container" *ngIf="disableContent !== 'none'">
         <div [class.overlay-full]="disableContent === 'all'"
             [class.overlay-popout-google]="configuredViewer ==='google' && (disableContent === 'popout' || disableContent === 'popout-hide')"
             [class.overlay-popout-office]="configuredViewer ==='office' && (disableContent === 'popout' || disableContent === 'popout-hide')"
             [style.background-color]="disableContent === 'popout-hide' ? '#fff': 'transparent'">
         </div>
-        <iframe *ngIf="fullUrl" #iframe id="iframe" frameBorder="0" [src]="fullUrl"></iframe>
+        <iframe (load)="iframeLoaded()" *ngIf="fullUrl" #iframe id="iframe" frameBorder="0" [src]="fullUrl"></iframe>
     </div>
 </ng-container>
