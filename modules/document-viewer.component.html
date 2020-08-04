@@ -4,7 +4,7 @@
         [innerHtml]="docHtml"
     ></div>
     <embed
-        *ngIf="configuredViewer === 'pdf'"
+        *ngIf="fullUrl && configuredViewer === 'pdf'"
         type="application/pdf"
         [src]="fullUrl"
         style="width: 100%; height: 100%;"
