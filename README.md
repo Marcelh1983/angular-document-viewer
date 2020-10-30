@@ -133,5 +133,5 @@ and make sure mammoth.browser.min.js is loaded. For the angular/cli you would ad
 ```
 
 My other packages:
-- ngx-event-handler: advance event handling like click-outside with serval options: [npm](https://www.npmjs.com/package/ngx-event-handler) [github](https://github.com/Marcelh1983/angular-event-handler) [demo](https://stackblitz.com/edit/ngx-event-handler)
-- ngx-edit-inline: basic inline edit component: [npm](https://www.npmjs.com/package/ngx-edit-inline) [github](https://github.com/Marcelh1983/angular-inline-edit) [demo](https://ngx-edit-inline.firebaseapp.com/)
+- ngx-event-handler: advance event handling like click-outside with serval options: [npm](https://www.npmjs.com/package/ngx-event-handler) | [github](https://github.com/Marcelh1983/angular-event-handler) | [demo](https://stackblitz.com/edit/ngx-event-handler)
+- ngx-edit-inline: basic inline edit component: [npm](https://www.npmjs.com/package/ngx-edit-inline) | [github](https://github.com/Marcelh1983/angular-inline-edit) | [demo](https://ngx-edit-inline.firebaseapp.com/)
