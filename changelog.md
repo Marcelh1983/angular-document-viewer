@@ -1,3 +1,7 @@
+# 1.4.0 (11/17/2020)
+* upgraded to angular 11
+* migrated to eslint
+
 # 1.3.0 (08/05/2020)
 * better way to check if iframe is loaded. Fix for unnecessary reload
 * object tag instead of embed thanks to @mediantiba

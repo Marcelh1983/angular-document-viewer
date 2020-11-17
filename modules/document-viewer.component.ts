@@ -4,11 +4,13 @@ import { take } from 'rxjs/operators';
 import { Subscription, interval, timer } from 'rxjs';
 import { EventEmitter } from '@angular/core';
 
+// eslint-disable-next-line no-var
 declare var mammoth;
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export type viewerType = 'google' | 'office' | 'mammoth' | 'pdf' | 'url';
 @Component({
-    // tslint:disable-next-line: component-selector
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'ngx-doc-viewer',
     templateUrl: 'document-viewer.component.html',
     styles: [`:host {
@@ -50,13 +52,6 @@ export type viewerType = 'google' | 'office' | 'mammoth' | 'pdf' | 'url';
     `]
 })
 export class NgxDocViewerComponent implements OnChanges, OnDestroy {
-    public fullUrl: SafeResourceUrl = null;
-    public externalViewer = false;
-    public docHtml = '';
-    public configuredViewer: viewerType = 'google';
-    private checkIFrameSubscription: Subscription = null;
-
-    constructor(private domSanitizer: DomSanitizer, private ngZone: NgZone) { }
     @Output() loaded: EventEmitter<any> = new EventEmitter();
     @Input() url = '';
     @Input() queryParams = '';
@@ -66,6 +61,15 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
     @Input() googleCheckContentLoaded = true;
     @Input() viewer: viewerType;
     @ViewChildren('iframe') iframes: QueryList<ElementRef>;
+
+    public fullUrl: SafeResourceUrl = null;
+    public externalViewer = false;
+    public docHtml = '';
+    public configuredViewer: viewerType = 'google';
+    private checkIFrameSubscription: Subscription = null;
+
+    constructor(private domSanitizer: DomSanitizer, private ngZone: NgZone) { }
+
     ngOnDestroy(): void {
         if (this.checkIFrameSubscription) {
             this.checkIFrameSubscription.unsubscribe();
@@ -108,7 +112,8 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
                 }
             }
             this.docHtml = '';
-            this.externalViewer = this.configuredViewer === 'google' || this.configuredViewer === 'office' || this.configuredViewer === 'url';
+            this.externalViewer = this.configuredViewer === 'google' || this.configuredViewer === 'office' ||
+                this.configuredViewer === 'url';
             if (this.checkIFrameSubscription) {
                 this.checkIFrameSubscription.unsubscribe();
             }
