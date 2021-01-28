@@ -6,6 +6,9 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "predeploy": [
+      "ng build --prod"
+    ],
     "rewrites": [
       {
         "source": "**",
