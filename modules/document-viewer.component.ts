@@ -123,7 +123,7 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
                 || this.configuredViewer === 'pdf' || this.configuredViewer === 'url') {
                 const u = this.url.indexOf('/') ? encodeURIComponent(this.url) : this.url;
                 let url = this.viewerUrl ? this.viewerUrl.replace('%URL%', u) : this.url;
-                if (!!this.queryParams && this.configuredViewer !== 'pdf') {
+                if (!!this.queryParams && this.configuredViewer !== 'pdf' && this.configuredViewer !== 'url') {
                     const start = this.queryParams.startsWith('&') ? '' : '&';
                     url = `${url}${start}${this.queryParams}`;
                 }
