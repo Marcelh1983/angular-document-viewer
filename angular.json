@@ -1,57 +1,57 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "projects",
-  "projects": {
-    "demo": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss",
-          "skipTests": true
-        },
-        "@schematics/angular:class": {
-          "skipTests": true
-        },
-        "@schematics/angular:directive": {
-          "skipTests": true
-        },
-        "@schematics/angular:guard": {
-          "skipTests": true
-        },
-        "@schematics/angular:interceptor": {
-          "skipTests": true
-        },
-        "@schematics/angular:module": {
-          "skipTests": true
-        },
-        "@schematics/angular:pipe": {
-          "skipTests": true
-        },
-        "@schematics/angular:service": {
-          "skipTests": true
-        }
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "demo-angular",
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
       },
-      "root": "",
-      "sourceRoot": "demo",
-      "prefix": "app",
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "projects": {
+    "demo-angular": {
+      "projectType": "application",
+      "root": "apps/demo-angular",
+      "sourceRoot": "apps/demo-angular/src",
+      "prefix": "documentviewer",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/demo",
-            "index": "demo/index.html",
-            "main": "demo/main.ts",
-            "polyfills": "demo/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "outputPath": "dist/apps/demo-angular",
+            "index": "apps/demo-angular/src/index.html",
+            "main": "apps/demo-angular/src/main.ts",
+            "polyfills": "apps/demo-angular/src/polyfills.ts",
+            "tsConfig": "apps/demo-angular/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "demo/favicon.ico",
-              "demo/assets"
+              "apps/demo-angular/src/favicon.ico",
+              "apps/demo-angular/src/assets"
             ],
-            "styles": [
-              "demo/styles.scss"
-            ],
+            "styles": ["apps/demo-angular/src/styles.scss"],
             "scripts": [
               "node_modules/mammoth/mammoth.browser.min.js"
             ]
@@ -60,8 +60,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "demo/environments/environment.ts",
-                  "with": "demo/environments/environment.prod.ts"
+                  "replace": "apps/demo-angular/src/environments/environment.ts",
+                  "with": "apps/demo-angular/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -89,34 +89,84 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "demo:build"
+            "browserTarget": "demo-angular:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "demo:build:production"
+              "browserTarget": "demo-angular:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "demo:build"
+            "browserTarget": "demo-angular:build"
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "demo/**/*.ts",
-              "demo/**/*.html"
+              "apps/demo-angular/src/**/*.ts",
+              "apps/demo-angular/src/**/*.html"
             ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/demo-angular"],
+          "options": {
+            "jestConfig": "apps/demo-angular/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ui-angular": {
+      "projectType": "library",
+      "root": "libs/ui-angular",
+      "sourceRoot": "libs/ui-angular/src",
+      "prefix": "documentviewer",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui-angular/src/**/*.ts",
+              "libs/ui-angular/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ui-angular"],
+          "options": {
+            "jestConfig": "libs/ui-angular/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "data": {
+      "root": "libs/data",
+      "sourceRoot": "libs/data/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/data/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/data"],
+          "options": {
+            "jestConfig": "libs/data/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
     }
-  },
-  "defaultProject": "demo",
-  "cli": {
-    "analytics": false
   }
 }

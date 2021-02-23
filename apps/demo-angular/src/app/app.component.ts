@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
-import { viewerType } from 'modules/document-viewer.component';
-import { getbaseUrl } from 'demo/utils';
-
+import { getbaseUrl, ViewerType } from '@documentviewer/data';
 @Component({
-  selector: 'app-root',
+  selector: 'documentviewer-root',
   templateUrl: 'app.component.html',
   styles: []
 })
 export class AppComponent {
-  viewers: { name: viewerType; docs: string[]; custom: boolean; acceptedUploadTypes: string; viewerUrl?: string }[] = [
+  viewers: { name: ViewerType; docs: string[]; custom: boolean; acceptedUploadTypes: string; viewerUrl?: string }[] = [
     {
       name: 'google', docs: [
         'https://file-examples-com.github.io/uploads/2017/02/file-sample_100kB.docx',
@@ -47,8 +45,7 @@ export class AppComponent {
   selectedViewer = this.viewers[0];
   selectedDoc = this.selectedViewer.docs[0];
 
-  constructor() { }
-  selectViewer(viewerName: viewerType) {
+  selectViewer(viewerName: ViewerType) {
     if (viewerName !== this.selectViewer.name) {
       this.selectedViewer = this.viewers.find(v => v.name === viewerName);
       this.selectedDoc = this.selectedViewer.docs[0];
@@ -60,10 +57,12 @@ export class AppComponent {
     return splittedDoc[splittedDoc.length - 1];
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleFiles(fileInput: any) {
     if (fileInput.target.files && fileInput.target.files[0]) {
       const reader = new FileReader();
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       reader.onload = (e: any) => {
         this.selectedDoc = e.target.result;
       };
