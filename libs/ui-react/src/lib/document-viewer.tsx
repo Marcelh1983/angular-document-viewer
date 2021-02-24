@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Subscription, timer } from 'rxjs';
-import { googleCheckSubscription, getViewerDetails } from '@documentviewer/data';
+import {
+  googleCheckSubscription,
+  getViewerDetails,
+  getDocxToHtml,
+} from '@documentviewer/data';
 
 const iframeStyle = {
   width: '100%',
@@ -42,18 +46,35 @@ export const DocumentViewer = (props: Props) => {
   const iframeRef = useRef(null);
   let checkIFrameSubscription: Subscription;
   const [url, setUrl] = useState('');
+  const [externalViewer, setExternalViewer] = useState(true);
   const [loaded, setLoaded] = useState(false);
+  const [docHtml, setDocHtml] = useState(null);
+
   useEffect(() => {
-    const details = getViewerDetails(props.url, props.viewer, props.queryParams, props.viewerUrl);
+    const details = getViewerDetails(
+      props.url,
+      props.viewer,
+      props.queryParams,
+      props.viewerUrl
+    );
     setUrl(details.url);
+    setExternalViewer(details.externalViewer);
     if (iframeRef && iframeRef.current) {
       const iframe = iframeRef.current;
       // eslint-disable-next-line react-hooks/exhaustive-deps
       if (!loaded) {
-        checkIFrameSubscription =  googleCheckSubscription(iframe, props.googleCheckInterval);
+        checkIFrameSubscription = googleCheckSubscription(
+          iframe,
+          props.googleCheckInterval
+        );
       }
+    } else if (props.viewer === 'mammoth') {
+      const setHtml = async () => {
+        setDocHtml({__html: await getDocxToHtml(url) });
+      };
+      setHtml();
     }
-  }, []);
+  }, [props]);
 
   const iframeLoaded = () => {
     props.loaded();
@@ -62,19 +83,28 @@ export const DocumentViewer = (props: Props) => {
     }
   };
 
-  return (
-      <iframe
-        style={iframeStyle}
-        ref={iframeRef}
-        onLoad={() => {
-          console.log('loaded.');
-          setLoaded(true);
-          iframeLoaded();
-        }}
-        id="iframe"
-        title="iframe"
-        frameBorder="0"
-        src={url}
-      ></iframe>
+  return externalViewer ? (
+    <iframe
+      style={iframeStyle}
+      ref={iframeRef}
+      onLoad={() => {
+        console.log('loaded.');
+        setLoaded(true);
+        iframeLoaded();
+      }}
+      id="iframe"
+      title="iframe"
+      frameBorder="0"
+      src={url}
+    ></iframe>
+  ) : props.viewer !== 'pdf' ? (
+    <div dangerouslySetInnerHTML={docHtml}></div>
+  ) : (
+    url ? <object data={url} type="application/pdf" width="100%" height="100%">
+      <p>
+        Your browser does not support PDFs.
+        <a href={url}>Download the PDF</a>.
+      </p>
+    </object> : null
   );
 };

@@ -94,7 +94,7 @@ export const getViewerDetails = (url: string, configuredViewer: ViewerType = 'go
 
     const u = url.indexOf('/') ? encodeURIComponent(url) : url;
     let fullUrl = viewerUrl ? viewerUrl.replace('%URL%', u) : url;
-    if (!!queryParams && configuredViewer !== 'pdf' && configuredViewer !== 'url') {
+    if (queryParams && externalViewer && configuredViewer !== 'url') {
         const start = queryParams.startsWith('&') ? '' : '&';
         fullUrl = `${fullUrl}${start}${queryParams}`;
     }

@@ -85,6 +85,7 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
             changes.viewer && changes.viewer.currentValue !== changes.viewer.previousValue ||
             changes.viewerUrl && changes.viewerUrl.currentValue !== changes.viewerUrl.previousValue) {
             const viewerDetails = getViewerDetails(this.url, this.configuredViewer, this.queryParams, this.viewerUrl);
+            
             this.externalViewer = viewerDetails.externalViewer;
             this.docHtml = '';
             if (this.checkIFrameSubscription) {
