@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@documentviewer/ui-angular": ["libs/ui-angular/src/index.ts"],
-      "@documentviewer/data": ["libs/data/src/index.ts"]
+      "@documentviewer/data": ["libs/data/src/index.ts"],
+      "@documentviewer/ui-react": ["libs/ui-react/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

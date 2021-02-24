@@ -29,6 +29,20 @@
     },
     "@nrwl/angular:component": {
       "style": "scss"
+    },
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint"
+      }
     }
   },
   "projects": {
@@ -52,9 +66,7 @@
               "apps/demo-angular/src/assets"
             ],
             "styles": ["apps/demo-angular/src/styles.scss"],
-            "scripts": [
-              "node_modules/mammoth/mammoth.browser.min.js"
-            ]
+            "scripts": ["node_modules/mammoth/mammoth.browser.min.js"]
           },
           "configurations": {
             "production": {
@@ -163,6 +175,101 @@
           "outputs": ["coverage/libs/data"],
           "options": {
             "jestConfig": "libs/data/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ui-react": {
+      "root": "libs/ui-react",
+      "sourceRoot": "libs/ui-react/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/ui-react/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ui-react"],
+          "options": {
+            "jestConfig": "libs/ui-react/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "demo-react": {
+      "root": "apps/demo-react",
+      "sourceRoot": "apps/demo-react/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/demo-react",
+            "index": "apps/demo-react/src/index.html",
+            "main": "apps/demo-react/src/main.tsx",
+            "polyfills": "apps/demo-react/src/polyfills.ts",
+            "tsConfig": "apps/demo-react/tsconfig.app.json",
+            "assets": [
+              "apps/demo-react/src/favicon.ico",
+              "apps/demo-react/src/assets"
+            ],
+            "styles": ["apps/demo-react/src/styles.scss"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/demo-react/src/environments/environment.ts",
+                  "with": "apps/demo-react/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "demo-react:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "demo-react:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/demo-react/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/demo-react"],
+          "options": {
+            "jestConfig": "apps/demo-react/jest.config.js",
             "passWithNoTests": true
           }
         }

@@ -2,7 +2,7 @@
 declare var mammoth;
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { ViewerType } from '..';
+import { ViewerType } from './model';
 
 export const fileToArray = (url: string): Promise<ArrayBuffer> => {
     return new Promise<ArrayBuffer>((resolve, reject) => {
@@ -31,6 +31,24 @@ const reloadIFrame = (iframe: HTMLIFrameElement) => {
         iframe.src = iframe.src;
     }
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const handleFileUpload = (fileInput: any) => {
+    return new Promise<string>((resolve, reject) => {
+        if (fileInput.target.files && fileInput.target.files[0]) {
+            const reader = new FileReader();
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            reader.onload = (e: any) => {
+                resolve(e.target.result);
+            };
+            reader.readAsDataURL(fileInput.target.files[0]);
+        } else {
+            reject('no files selected')
+        }
+    })
+
+}
+
 
 export const getbaseUrl = (): string => {
     const pathArray = window.location.href.split('/');
