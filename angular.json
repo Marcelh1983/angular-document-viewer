@@ -65,8 +65,12 @@
               "apps/demo-angular/src/favicon.ico",
               "apps/demo-angular/src/assets"
             ],
-            "styles": ["apps/demo-angular/src/styles.scss"],
-            "scripts": ["node_modules/mammoth/mammoth.browser.min.js"]
+            "styles": [
+              "apps/demo-angular/src/styles.scss"
+            ],
+            "scripts": [
+              "node_modules/mammoth/mammoth.browser.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -126,7 +130,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/demo-angular"],
+          "outputs": [
+            "coverage/apps/demo-angular"
+          ],
           "options": {
             "jestConfig": "apps/demo-angular/jest.config.js",
             "passWithNoTests": true
@@ -138,8 +144,20 @@
       "projectType": "library",
       "root": "libs/ngx-doc-viewer",
       "sourceRoot": "libs/ngx-doc-viewer/src",
-      "prefix": "documentviewer",
+      "prefix": "libtest",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/ngx-doc-viewer/tsconfig.lib.json",
+            "project": "libs/ngx-doc-viewer/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/ngx-doc-viewer/tsconfig.lib.prod.json"
+            }
+          }
+        },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
@@ -148,31 +166,40 @@
               "libs/ngx-doc-viewer/src/**/*.html"
             ]
           }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/ngx-doc-viewer"],
-          "options": {
-            "jestConfig": "libs/ngx-doc-viewer/jest.config.js",
-            "passWithNoTests": true
-          }
         }
       }
     },
     "data": {
+      "projectType": "library",
       "root": "libs/data",
       "sourceRoot": "libs/data/src",
-      "projectType": "library",
+      "prefix": "libtest",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/data/tsconfig.lib.json",
+            "project": "libs/data/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/data/tsconfig.lib.prod.json"
+            }
+          }
+        },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/data/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/data/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/data"],
+          "outputs": [
+            "coverage/libs/data"
+          ],
           "options": {
             "jestConfig": "libs/data/jest.config.js",
             "passWithNoTests": true
@@ -188,12 +215,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/react-docviewer/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": [
+              "libs/react-docviewer/**/*.{ts,tsx,js,jsx}"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/react-docviewer"],
+          "outputs": [
+            "coverage/libs/react-docviewer"
+          ],
           "options": {
             "jestConfig": "libs/react-docviewer/jest.config.js",
             "passWithNoTests": true
@@ -208,7 +239,9 @@
       "architect": {
         "build": {
           "builder": "@nrwl/web:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/demo-react",
             "index": "apps/demo-react/src/index.html",
@@ -219,7 +252,9 @@
               "apps/demo-react/src/favicon.ico",
               "apps/demo-react/src/assets"
             ],
-            "styles": ["apps/demo-react/src/styles.scss"],
+            "styles": [
+              "apps/demo-react/src/styles.scss"
+            ],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"
           },
@@ -262,12 +297,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/demo-react/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": [
+              "apps/demo-react/**/*.{ts,tsx,js,jsx}"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/demo-react"],
+          "outputs": [
+            "coverage/apps/demo-react"
+          ],
           "options": {
             "jestConfig": "apps/demo-react/jest.config.js",
             "passWithNoTests": true

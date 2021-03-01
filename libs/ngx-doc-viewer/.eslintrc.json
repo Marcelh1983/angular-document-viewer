@@ -12,19 +12,11 @@
       "rules": {
         "@angular-eslint/directive-selector": [
           "error",
-          {
-            "type": "attribute",
-            "prefix": "documentviewer",
-            "style": "camelCase"
-          }
+          { "type": "attribute", "prefix": "libtest", "style": "camelCase" }
         ],
         "@angular-eslint/component-selector": [
           "error",
-          {
-            "type": "element",
-            "prefix": "documentviewer",
-            "style": "kebab-case"
-          }
+          { "type": "element", "prefix": "libtest", "style": "kebab-case" }
         ]
       }
     },

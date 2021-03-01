@@ -1,0 +1,9 @@
+{
+    "name": "ngx-doc-viewer",
+    "version": "2.0.0-alpha",
+    "peerDependencies": {  },
+    "dependencies": {
+      "tslib": "^2.0.0"
+    }
+  }
+  
