@@ -1,36 +1,51 @@
-<div style="text-align:center">
-    <div class="d-flex">
-        <button
-            *ngFor="let viewer of viewers"
-            [class.active]="selectedViewer.name === viewer.name"
-            class="btn btn-outline-primary m-2"
-            (click)="selectViewer(viewer.name)"
-        >{{viewer.name}}</button>
-    </div>
-    <div class="d-flex">
-        <button *ngFor="let doc of selectedViewer.docs" [class.active]="selectedDoc === doc" class="btn btn-outline-secondary m-2"
-         (click)="selectedDoc = doc">{{getDocExtension(doc)}}</button>
-        <ng-container *ngIf="selectedViewer.custom">
-            <input
-                class="form-control w-100 m-2"
-                type="text"
-                placeholder="your document url"
-                #input
-            >
-            <button
-                class="btn btn-outline-secondary m-2"
-                (click)="selectedDoc = input.value;"
-            >Go</button>
-        </ng-container>
-        <ng-container *ngIf="selectedViewer.acceptedUploadTypes">
-            <input type="file" id="input" [accept]="selectedViewer.acceptedUploadTypes" (change)="handleFiles($event)">
-        </ng-container>
-    </div>
-    <ngx-doc-viewer
-        queryParams="hl=Nl"
-        [url]="selectedDoc"
-        [viewerUrl]="selectedViewer.viewerUrl"
-        [viewer]="selectedViewer.name"
-        style="width:100%;height:80vh;"
-    ></ngx-doc-viewer>
+<div style="text-align: center">
+  <div class="d-flex">
+    <button
+      *ngFor="let viewer of viewers"
+      [class.active]="selectedViewer.name === viewer.name"
+      class="btn btn-outline-primary m-2"
+      (click)="selectViewer(viewer.name)"
+    >
+      {{ viewer.name }}
+    </button>
+  </div>
+  <div class="d-flex">
+    <button
+      *ngFor="let doc of selectedViewer.docs"
+      [class.active]="selectedDoc === doc"
+      class="btn btn-outline-secondary m-2"
+      (click)="selectedDoc = doc"
+    >
+      {{ getDocExtension(doc) }}
+    </button>
+    <ng-container *ngIf="selectedViewer.custom">
+      <input
+        class="form-control w-100 m-2"
+        type="text"
+        placeholder="your document url"
+        #input
+      />
+      <button
+        class="btn btn-outline-secondary m-2"
+        (click)="selectedDoc = input.value"
+      >
+        Go
+      </button>
+    </ng-container>
+    <ng-container *ngIf="selectedViewer.acceptedUploadTypes">
+      <input
+        type="file"
+        id="input"
+        [accept]="selectedViewer.acceptedUploadTypes"
+        (change)="handleFiles($event)"
+      />
+    </ng-container>
+  </div>
+  <ngx-doc-viewer
+    queryParams="hl=Nl"
+    [url]="selectedDoc"
+    [viewerUrl]="selectedViewer.viewerUrl"
+    [viewer]="selectedViewer.name"
+    style="width: 100%; height: 80vh"
+  ></ngx-doc-viewer>
 </div>

@@ -1,40 +1,38 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Demo</title>
+    <base href="/" />
 
-<head>
-  <meta charset="utf-8">
-  <title>Demo</title>
-  <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
+  <body>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
 
-<body>
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
+    <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
 
-<script>
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyB0hOFFK4FvvVF6a0zAcjZP7nNftfCiCTQ",
-    authDomain: "angular-doc-viewer.firebaseapp.com",
-    databaseURL: "https://angular-doc-viewer.firebaseio.com",
-    projectId: "angular-doc-viewer",
-    storageBucket: "angular-doc-viewer.appspot.com",
-    messagingSenderId: "902089077961",
-    appId: "1:902089077961:web:012f06c5caf610d9ee4918",
-    measurementId: "G-52BNS6YSJ3"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-</script>
-  <documentviewer-root></documentviewer-root>
-</body>
-
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: 'AIzaSyB0hOFFK4FvvVF6a0zAcjZP7nNftfCiCTQ',
+        authDomain: 'angular-doc-viewer.firebaseapp.com',
+        databaseURL: 'https://angular-doc-viewer.firebaseio.com',
+        projectId: 'angular-doc-viewer',
+        storageBucket: 'angular-doc-viewer.appspot.com',
+        messagingSenderId: '902089077961',
+        appId: '1:902089077961:web:012f06c5caf610d9ee4918',
+        measurementId: 'G-52BNS6YSJ3',
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
+    <documentviewer-root></documentviewer-root>
+  </body>
 </html>

@@ -13,7 +13,7 @@ interface Props {
 
 export const defaultProps: Props = {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  loaded: () => { },
+  loaded: () => {},
   disableContent: 'none',
   googleCheckContentLoaded: true,
   googleCheckInterval: 3000,

@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-    imports: [CommonModule],
-    declarations: [NgxDocViewerComponent],
-    exports: [NgxDocViewerComponent]
+  imports: [CommonModule],
+  declarations: [NgxDocViewerComponent],
+  exports: [NgxDocViewerComponent],
 })
-export class NgxDocViewerModule { }
+export class NgxDocViewerModule {}

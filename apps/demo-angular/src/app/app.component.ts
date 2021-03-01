@@ -3,7 +3,7 @@ import { handleFileUpload, viewers, ViewerType } from '@documentviewer/data';
 @Component({
   selector: 'documentviewer-root',
   templateUrl: 'app.component.html',
-  styles: []
+  styles: [],
 })
 export class AppComponent {
   viewers = viewers;
@@ -12,7 +12,7 @@ export class AppComponent {
 
   selectViewer(viewerName: ViewerType) {
     if (viewerName !== this.selectViewer.name) {
-      this.selectedViewer = this.viewers.find(v => v.name === viewerName);
+      this.selectedViewer = this.viewers.find((v) => v.name === viewerName);
       this.selectedDoc = this.selectedViewer.docs[0];
     }
   }
@@ -26,5 +26,4 @@ export class AppComponent {
   async handleFiles(fileInput: any) {
     this.selectedDoc = await handleFileUpload(fileInput);
   }
-
 }
