@@ -1,7 +1,5 @@
 // eslint-disable-next-line no-var
 declare var mammoth;
-import { timer } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { ViewerType } from './model';
 
 export const fileToArray = (url: string): Promise<ArrayBuffer> => {
@@ -66,13 +64,26 @@ export const getDocxToHtml = async (url: string) => {
     return resultObject.value;
 }
 
-export const googleCheckSubscription = (iframe: HTMLIFrameElement, googleCheckInterval = 3000) => {
-    return timer(100, googleCheckInterval)
-        .pipe(
-            take(Math.round(googleCheckInterval === 0 ? 0 : 20000 / googleCheckInterval)))
-        .subscribe(() => {
-            reloadIFrame(iframe);
-        });
+export const googleCheckSubscription = () => {
+    let subscription = null;
+    let checkCount = 0;
+    return {
+        subscribe: (iframe: HTMLIFrameElement, interval = 3000, maxChecks = 3) => {
+            subscription = setInterval(() => {
+                checkCount++;
+                if (checkCount >= maxChecks) {
+                    clearInterval(subscription);
+                }
+                reloadIFrame(iframe);
+            }, interval);
+            return subscription;
+        },
+        unsubscribe: () => {
+            if (subscription) {
+                clearInterval(subscription);
+            }
+        }
+    }
 }
 
 export const getViewerDetails = (url: string, configuredViewer: ViewerType = 'google', queryParams = '', viewerUrl = null) => {

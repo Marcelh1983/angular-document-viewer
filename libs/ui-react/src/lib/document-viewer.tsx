@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Subscription, timer } from 'rxjs';
 import {
   googleCheckSubscription,
   getViewerDetails,
@@ -38,17 +37,27 @@ const defaultProps: Props = {
 
 interface State {
   url: string;
-  isloaded: boolean;
+  externalViewer: boolean;
+  docHtml: any;
 }
 
 export const DocumentViewer = (props: Props) => {
-  props = { ...defaultProps, ...props };
+  // props = { ...defaultProps, ...props };
   const iframeRef = useRef(null);
-  let checkIFrameSubscription: Subscription;
-  const [url, setUrl] = useState('');
-  const [externalViewer, setExternalViewer] = useState(true);
-  const [loaded, setLoaded] = useState(false);
-  const [docHtml, setDocHtml] = useState(null);
+
+  const [state, setState] = useState({
+    url: '',
+    externalViewer: true,
+    docHtml: '',
+  } as State);
+  const checkIFrameSubscription = useRef({
+    subscribe: (iframe: HTMLIFrameElement, interval = 3000, maxChecks = 5) => {
+      //
+    },
+    unsubscribe: () => {
+      //
+    },
+  });
 
   useEffect(() => {
     const details = getViewerDetails(
@@ -57,54 +66,59 @@ export const DocumentViewer = (props: Props) => {
       props.queryParams,
       props.viewerUrl
     );
-    setUrl(details.url);
-    setExternalViewer(details.externalViewer);
+    setState({
+      url: details.url,
+      externalViewer: details.externalViewer,
+      docHtml: '',
+    });
     if (iframeRef && iframeRef.current) {
       const iframe = iframeRef.current;
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      if (!loaded) {
-        checkIFrameSubscription = googleCheckSubscription(
-          iframe,
-          props.googleCheckInterval
-        );
+      if (checkIFrameSubscription && checkIFrameSubscription.current) {
+        checkIFrameSubscription.current.unsubscribe();
       }
+      const intervalRef = googleCheckSubscription();
+      intervalRef.subscribe(iframe, props.googleCheckInterval);
+      checkIFrameSubscription.current = intervalRef;
     } else if (props.viewer === 'mammoth') {
       const setHtml = async () => {
-        setDocHtml({__html: await getDocxToHtml(url) });
+        const docHtml = { __html: await getDocxToHtml(details.url) };
+        setState({
+          url: '',
+          docHtml,
+          externalViewer: false,
+        });
       };
       setHtml();
     }
   }, [props]);
 
   const iframeLoaded = () => {
-    props.loaded();
-    if (checkIFrameSubscription) {
-      checkIFrameSubscription.unsubscribe();
+    if (props.loaded) props.loaded();
+    if (checkIFrameSubscription.current) {
+      checkIFrameSubscription.current.unsubscribe();
     }
   };
 
-  return externalViewer ? (
+  return state.externalViewer ? (
     <iframe
       style={iframeStyle}
       ref={iframeRef}
       onLoad={() => {
-        console.log('loaded.');
-        setLoaded(true);
         iframeLoaded();
       }}
       id="iframe"
       title="iframe"
       frameBorder="0"
-      src={url}
+      src={state.url}
     ></iframe>
   ) : props.viewer !== 'pdf' ? (
-    <div dangerouslySetInnerHTML={docHtml}></div>
-  ) : (
-    url ? <object data={url} type="application/pdf" width="100%" height="100%">
+    <div dangerouslySetInnerHTML={state.docHtml}></div>
+  ) : state.url ? (
+    <object data={state.url} type="application/pdf" width="100%" height="100%">
       <p>
         Your browser does not support PDFs.
-        <a href={url}>Download the PDF</a>.
+        <a href={state.url}>Download the PDF</a>.
       </p>
-    </object> : null
-  );
+    </object>
+  ) : null;
 };

@@ -1,6 +1,5 @@
 import { Component, Input, NgZone, OnDestroy, OnChanges, SimpleChanges, Output, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
 import { EventEmitter } from '@angular/core';
 import { getDocxToHtml, getViewerDetails, googleCheckSubscription } from '@documentviewer/data';
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -62,7 +61,15 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
     public externalViewer = false;
     public docHtml = '';
     public configuredViewer: viewerType = 'google';
-    private checkIFrameSubscription: Subscription = null;
+    private checkIFrameSubscription = {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        subscribe: (iframe: HTMLIFrameElement, _interval = 3000, _maxChecks = 3) => {
+          //
+        },
+        unsubscribe: () => {
+          //
+        },
+      };
 
     constructor(private domSanitizer: DomSanitizer, private ngZone: NgZone) { }
 
@@ -102,9 +109,9 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
                 if (this.configuredViewer === 'google' && this.googleCheckContentLoaded) {
                     this.ngZone.runOutsideAngular(() => {
                         // if it's not loaded after the googleIntervalCheck, then open load again.
-                        const iframe = this.iframes?.first?.nativeElement;
-                        this.googleCheckInterval;
-                        this.checkIFrameSubscription = googleCheckSubscription(iframe, this.googleCheckInterval);
+                        const iframe = this.iframes?.first?.nativeElement as HTMLIFrameElement;
+                        this.checkIFrameSubscription = googleCheckSubscription();
+                        this.checkIFrameSubscription.subscribe(iframe, this.googleCheckInterval);
                     });
                 }
             } else if (this.configuredViewer === 'mammoth') {
