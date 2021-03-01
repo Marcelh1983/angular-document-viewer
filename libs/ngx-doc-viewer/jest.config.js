@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'ui-angular',
+  displayName: 'ngx-doc-viewer',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -14,7 +14,7 @@ module.exports = {
       },
     },
   },
-  coverageDirectory: '../../coverage/libs/ui-angular',
+  coverageDirectory: '../../coverage/libs/ngx-doc-viewer',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
     'jest-preset-angular/build/AngularSnapshotSerializer.js',

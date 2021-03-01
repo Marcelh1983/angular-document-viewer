@@ -26,13 +26,13 @@
     "demo-angular": {
       "tags": []
     },
-    "ui-angular": {
+    "ngx-doc-viewer": {
       "tags": []
     },
     "data": {
       "tags": []
     },
-    "ui-react": {
+    "react-docviewer": {
       "tags": []
     },
     "demo-react": {

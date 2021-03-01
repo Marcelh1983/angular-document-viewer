@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DocumentViewer } from '@documentviewer/ui-react';
+import { DocumentViewer } from '@documentviewer/react-docviewer';
 import { handleFileUpload, viewers, ViewerType } from '@documentviewer/data';
 import './app.module.scss';
 

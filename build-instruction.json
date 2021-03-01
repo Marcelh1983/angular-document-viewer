@@ -1,0 +1,14 @@
+{
+    "builds": {
+        "angular": {
+            "name": "ngx-doc-viewer",
+            "version": "2.0.0-alpha",
+            "remove": "*react*"
+        },
+        "react": {
+            "name": "react-docviewer",
+            "version": "1.0.0-alpha",
+            "remove": "*angular*, ng-packagr"
+        }
+    }
+}

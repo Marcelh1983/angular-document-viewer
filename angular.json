@@ -134,26 +134,26 @@
         }
       }
     },
-    "ui-angular": {
+    "ngx-doc-viewer": {
       "projectType": "library",
-      "root": "libs/ui-angular",
-      "sourceRoot": "libs/ui-angular/src",
+      "root": "libs/ngx-doc-viewer",
+      "sourceRoot": "libs/ngx-doc-viewer/src",
       "prefix": "documentviewer",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/ui-angular/src/**/*.ts",
-              "libs/ui-angular/src/**/*.html"
+              "libs/ngx-doc-viewer/src/**/*.ts",
+              "libs/ngx-doc-viewer/src/**/*.html"
             ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/ui-angular"],
+          "outputs": ["coverage/libs/ngx-doc-viewer"],
           "options": {
-            "jestConfig": "libs/ui-angular/jest.config.js",
+            "jestConfig": "libs/ngx-doc-viewer/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -180,22 +180,22 @@
         }
       }
     },
-    "ui-react": {
-      "root": "libs/ui-react",
-      "sourceRoot": "libs/ui-react/src",
+    "react-docviewer": {
+      "root": "libs/react-docviewer",
+      "sourceRoot": "libs/react-docviewer/src",
       "projectType": "library",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/ui-react/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": ["libs/react-docviewer/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/ui-react"],
+          "outputs": ["coverage/libs/react-docviewer"],
           "options": {
-            "jestConfig": "libs/ui-react/jest.config.js",
+            "jestConfig": "libs/react-docviewer/jest.config.js",
             "passWithNoTests": true
           }
         }
