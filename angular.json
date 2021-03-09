@@ -19,13 +19,11 @@
     "@nrwl/angular:application": {
       "style": "scss",
       "linter": "eslint",
-      "unitTestRunner": "jest",
       "e2eTestRunner": "cypress"
     },
     "@nrwl/angular:library": {
       "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "jest"
+      "linter": "eslint"
     },
     "@nrwl/angular:component": {
       "style": "scss"
@@ -65,12 +63,8 @@
               "apps/demo-angular/src/favicon.ico",
               "apps/demo-angular/src/assets"
             ],
-            "styles": [
-              "apps/demo-angular/src/styles.scss"
-            ],
-            "scripts": [
-              "node_modules/mammoth/mammoth.browser.min.js"
-            ]
+            "styles": ["apps/demo-angular/src/styles.scss"],
+            "scripts": ["node_modules/mammoth/mammoth.browser.min.js"]
           },
           "configurations": {
             "production": {
@@ -127,16 +121,6 @@
               "apps/demo-angular/src/**/*.html"
             ]
           }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/demo-angular"
-          ],
-          "options": {
-            "jestConfig": "apps/demo-angular/jest.config.js",
-            "passWithNoTests": true
-          }
         }
       }
     },
@@ -190,44 +174,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/data/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/data"
-          ],
-          "options": {
-            "jestConfig": "libs/data/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "react-docviewer": {
-      "root": "libs/react-docviewer",
-      "sourceRoot": "libs/react-docviewer/src",
-      "projectType": "library",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/react-docviewer/**/*.{ts,tsx,js,jsx}"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/react-docviewer"
-          ],
-          "options": {
-            "jestConfig": "libs/react-docviewer/jest.config.js",
-            "passWithNoTests": true
+            "lintFilePatterns": ["libs/data/**/*.ts"]
           }
         }
       }
@@ -239,9 +186,7 @@
       "architect": {
         "build": {
           "builder": "@nrwl/web:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/demo-react",
             "index": "apps/demo-react/src/index.html",
@@ -252,9 +197,7 @@
               "apps/demo-react/src/favicon.ico",
               "apps/demo-react/src/assets"
             ],
-            "styles": [
-              "apps/demo-react/src/styles.scss"
-            ],
+            "styles": ["apps/demo-react/src/styles.scss"],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"
           },
@@ -297,19 +240,40 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/demo-react/**/*.{ts,tsx,js,jsx}"
+            "lintFilePatterns": ["apps/demo-react/**/*.{ts,tsx,js,jsx}"]
+          }
+        }
+      }
+    },
+    "react-docviewer": {
+      "root": "libs/react-docviewer",
+      "sourceRoot": "libs/react-docviewer/src",
+      "projectType": "library",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/react-docviewer",
+            "tsConfig": "libs/react-docviewer/tsconfig.lib.json",
+            "project": "libs/react-docviewer/package.json",
+            "entryFile": "libs/react-docviewer/src/index.ts",
+            "external": ["react", "react-dom"],
+            "babelConfig": "@nrwl/react/plugins/bundle-babel",
+            "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+            "assets": [
+              {
+                "glob": "README.md",
+                "input": ".",
+                "output": "."
+              }
             ]
           }
         },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/demo-react"
-          ],
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "jestConfig": "apps/demo-react/jest.config.js",
-            "passWithNoTests": true
+            "lintFilePatterns": ["libs/react-docviewer/**/*.{ts,tsx,js,jsx}"]
           }
         }
       }

@@ -3,7 +3,7 @@ import {
   googleCheckSubscription,
   getViewerDetails,
   getDocxToHtml,
-} from '@documentviewer/data';
+} from './../../../helper';
 
 const iframeStyle = {
   width: '100%',
@@ -38,7 +38,7 @@ const defaultProps: Props = {
 interface State {
   url: string;
   externalViewer: boolean;
-  docHtml: any;
+  docHtml: { __html: string };
 }
 
 export const DocumentViewer = (props: Props) => {
@@ -48,7 +48,7 @@ export const DocumentViewer = (props: Props) => {
   const [state, setState] = useState({
     url: '',
     externalViewer: true,
-    docHtml: '',
+    docHtml: { __html: '' },
   } as State);
   const checkIFrameSubscription = useRef({
     subscribe: (iframe: HTMLIFrameElement, interval = 3000, maxChecks = 5) => {
@@ -69,7 +69,7 @@ export const DocumentViewer = (props: Props) => {
     setState({
       url: details.url,
       externalViewer: details.externalViewer,
-      docHtml: '',
+      docHtml: { __html: '' },
     });
     if (iframeRef && iframeRef.current) {
       const iframe = iframeRef.current;

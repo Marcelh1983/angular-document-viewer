@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { DocumentViewer } from '@documentviewer/react-docviewer';
-import { handleFileUpload, viewers, ViewerType } from '@documentviewer/data';
 import './app.module.scss';
+import { viewers } from '@documentviewer/data';
+import { DocumentViewer, handleFileUpload, ViewerType } from 'react-docviewer';
 
 export function App() {
   const [selectedViewer, setSelectedViewer] = useState(viewers[0]);

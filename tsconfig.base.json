@@ -15,9 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@documentviewer/ngx-doc-viewer": ["libs/ngx-doc-viewer/src/index.ts"],
-      "@documentviewer/react-viewer": ["libs/react-docviewer/src/index.ts"],
-      "@documentviewer/data": ["libs/data/src/index.ts"]
+      "ngx-doc-viewer": ["libs/ngx-doc-viewer/src/index.ts"],
+      "@documentviewer/data": ["libs/data/src/index.ts"],
+      "react-docviewer": ["libs/react-docviewer/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

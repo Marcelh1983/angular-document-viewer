@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { NgxDocViewerModule } from '@documentviewer/ngx-doc-viewer';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 @NgModule({
   declarations: [AppComponent],

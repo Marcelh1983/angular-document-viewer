@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { handleFileUpload, viewers, ViewerType } from '@documentviewer/data';
+import { handleFileUpload, ViewerType } from 'ngx-doc-viewer';
+import { viewers} from '@documentviewer/data';
 @Component({
   selector: 'documentviewer-root',
   templateUrl: 'app.component.html',

@@ -12,11 +12,12 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { EventEmitter } from '@angular/core';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {
   getDocxToHtml,
   getViewerDetails,
   googleCheckSubscription,
-} from '@documentviewer/data';
+} from './../../../helper';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export type viewerType = 'google' | 'office' | 'mammoth' | 'pdf' | 'url';
 @Component({
@@ -83,7 +84,9 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     subscribe: (
       iframe: HTMLIFrameElement,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       _interval = 3000,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       _maxChecks = 3
     ) => {
       //

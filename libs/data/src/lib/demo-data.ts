@@ -1,5 +1,5 @@
-import { ViewerType } from './model';
-import { getbaseUrl } from './helper';
+import { ViewerType } from './../../../model';
+import { getbaseUrl } from './../../../helper';
 export const viewers: {
   name: ViewerType;
   docs: string[];
