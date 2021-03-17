@@ -69,14 +69,20 @@ export const googleCheckSubscription = () => {
   let checkCount = 0;
   return {
     subscribe: (iframe: HTMLIFrameElement, interval = 3000, maxChecks = 3) => {
-      subscription = setInterval(() => {
-        checkCount++;
-        if (checkCount >= maxChecks) {
+      if (!iframeLoaded(iframe)) {
+        subscription = setInterval(() => {
+          checkCount++;
+          if (checkCount >= maxChecks) {
+            clearInterval(subscription);
+          }
+          reloadIFrame(iframe);
+        }, interval);
+        return subscription;
+      } else {
+        if (subscription) {
           clearInterval(subscription);
         }
-        reloadIFrame(iframe);
-      }, interval);
-      return subscription;
+      }
     },
     unsubscribe: () => {
       if (subscription) {
@@ -85,6 +91,25 @@ export const googleCheckSubscription = () => {
     },
   };
 };
+
+export const iframeLoaded = (iframe: HTMLIFrameElement) => {
+  // its #document <html><head></head><body></body></html> when google is returning a 204
+  // so if contentDocument = null then it's loaded.
+  let isLoaded = false;
+  try {
+    if (!internetExplorer()) {
+      isLoaded = !iframe.contentDocument;
+    } else {
+      isLoaded = !iframe.contentWindow.document;
+    }
+  } catch {
+    // ignore message Blocked a frame with origin "http://..." from accessing a cross-origin frame.
+  }
+  return isLoaded;
+}
+
+const internetExplorer = () =>
+  (/MSIE (\d+\.\d+);/.test(navigator.userAgent) || navigator.userAgent.indexOf("Trident/") > -1);
 
 export const getViewerDetails = (
   url: string,

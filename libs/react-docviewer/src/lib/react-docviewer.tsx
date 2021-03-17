@@ -1,3 +1,4 @@
+import { IFrameReloader } from '../../../model';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   googleCheckSubscription,
@@ -50,14 +51,7 @@ export const DocumentViewer = (props: Props) => {
     externalViewer: true,
     docHtml: { __html: '' },
   } as State);
-  const checkIFrameSubscription = useRef({
-    subscribe: (iframe: HTMLIFrameElement, interval = 3000, maxChecks = 5) => {
-      //
-    },
-    unsubscribe: () => {
-      //
-    },
-  });
+  const checkIFrameSubscription = useRef<IFrameReloader>();
 
   useEffect(() => {
     const details = getViewerDetails(
@@ -76,6 +70,7 @@ export const DocumentViewer = (props: Props) => {
       if (checkIFrameSubscription && checkIFrameSubscription.current) {
         checkIFrameSubscription.current.unsubscribe();
       }
+      debugger;
       const intervalRef = googleCheckSubscription();
       intervalRef.subscribe(iframe, props.googleCheckInterval);
       checkIFrameSubscription.current = intervalRef;

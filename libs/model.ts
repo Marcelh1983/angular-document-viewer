@@ -11,6 +11,16 @@ interface Props {
   viewer?: ViewerType;
 }
 
+export interface IFrameReloader {
+  subscribe: (
+    iframe: HTMLIFrameElement,
+    interval?: number,
+    maxChecks?: number
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ) => any;
+  unsubscribe: () => void;
+}
+
 export const defaultProps: Props = {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   loaded: () => {},

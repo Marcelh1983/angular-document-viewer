@@ -9,6 +9,7 @@ import {
   ViewChildren,
   QueryList,
   ElementRef,
+  AfterViewInit,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { EventEmitter } from '@angular/core';
@@ -17,7 +18,11 @@ import {
   getDocxToHtml,
   getViewerDetails,
   googleCheckSubscription,
+  iframeLoaded
 } from './../../../helper';
+import {
+  IFrameReloader
+} from './../../../model';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export type viewerType = 'google' | 'office' | 'mammoth' | 'pdf' | 'url';
 @Component({
@@ -65,7 +70,7 @@ export type viewerType = 'google' | 'office' | 'mammoth' | 'pdf' | 'url';
     `,
   ],
 })
-export class NgxDocViewerComponent implements OnChanges, OnDestroy {
+export class NgxDocViewerComponent implements OnChanges, OnDestroy, AfterViewInit {
   @Output() loaded: EventEmitter<void> = new EventEmitter();
   @Input() url = '';
   @Input() queryParams = '';
@@ -80,23 +85,21 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
   public externalViewer = false;
   public docHtml = '';
   public configuredViewer: viewerType = 'google';
-  private checkIFrameSubscription = {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    subscribe: (
-      iframe: HTMLIFrameElement,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      _interval = 3000,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      _maxChecks = 3
-    ) => {
-      //
-    },
-    unsubscribe: () => {
-      //
-    },
-  };
+  private checkIFrameSubscription: IFrameReloader;
+  private shouldCheckIframe = false;
 
-  constructor(private domSanitizer: DomSanitizer, private ngZone: NgZone) {}
+  constructor(private domSanitizer: DomSanitizer, private ngZone: NgZone) { }
+
+  ngAfterViewInit(): void {
+    if (this.shouldCheckIframe) {
+      const iframe = this.iframes?.first
+        ?.nativeElement as HTMLIFrameElement;
+      if (iframe) {
+        this.shouldCheckIframe = false;
+        this.reloadIframe(iframe);
+      }
+    }
+  }
 
   ngOnDestroy(): void {
     if (this.checkIFrameSubscription) {
@@ -165,11 +168,11 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
             // if it's not loaded after the googleIntervalCheck, then open load again.
             const iframe = this.iframes?.first
               ?.nativeElement as HTMLIFrameElement;
-            this.checkIFrameSubscription = googleCheckSubscription();
-            this.checkIFrameSubscription.subscribe(
-              iframe,
-              this.googleCheckInterval
-            );
+            if (iframe) {
+              this.reloadIframe(iframe);
+            } else {
+              this.shouldCheckIframe = true;
+            }
           });
         }
       } else if (this.configuredViewer === 'mammoth') {
@@ -178,10 +181,22 @@ export class NgxDocViewerComponent implements OnChanges, OnDestroy {
     }
   }
 
+  private reloadIframe(iframe: HTMLIFrameElement) {
+    this.checkIFrameSubscription = googleCheckSubscription();
+    this.checkIFrameSubscription.subscribe(
+      iframe,
+      this.googleCheckInterval
+    );
+  }
+
   iframeLoaded() {
-    this.loaded.emit(null);
-    if (this.checkIFrameSubscription) {
-      this.checkIFrameSubscription.unsubscribe();
+    const iframe = this.iframes?.first
+      ?.nativeElement as HTMLIFrameElement;
+    if (iframe && iframeLoaded(iframe)) {
+      this.loaded.emit(null);
+      if (this.checkIFrameSubscription) {
+        this.checkIFrameSubscription.unsubscribe();
+      }
     }
   }
 }
